@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Plstka — Turn Your Trash Into Rewards</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Manrope:wght@700;800&family=Roboto:wght@400;600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --green: #00AE63;
+    --green-2: #00AE8B;
+    --green-solid: #01AE64;
+    --green-label: #008667;
+    --green-dark: #053C33;
+    --yellow: #FFD236;
+    --yellow-2: #FFE99C;
+    --star: #FFC107;
+    --text: #053C33;
+    --muted: #707070;
+    --bg-soft: #FAFAFA;
+    --grad: linear-gradient(180deg, #00AE63 40%, #00AE8B 100%);
+    --grad-yellow: linear-gradient(180deg, #FFD236 40%, #FFE99C 100%);
+    --radius: 24px;
+    --shadow-sm: 0 2px 10px rgba(5,60,51,.05);
+    --shadow-md: 0 14px 34px rgba(5,60,51,.08);
+    --shadow-lg: 0 28px 64px rgba(5,60,51,.14);
+    --ring: 0 0 0 3px #fff, 0 0 0 6px rgba(0,174,99,.45);
+    --hairline: rgba(5,60,51,.07);
+    /* Type scale (fluid, ~1.25 major-third) */
+    --fs-eyebrow: 13px;
+    --fs-body-sm: clamp(13.5px, 1vw, 14.5px);
+    --fs-body: clamp(15px, 1.05vw, 16.5px);
+    --fs-lead: clamp(17px, 1.5vw, 20px);
+    --fs-h4: clamp(18px, 1.4vw, 20px);
+    --fs-h3: clamp(20px, 1.7vw, 24px);
+    --fs-h2: clamp(32px, 3.8vw, 48px);
+    --fs-display: clamp(44px, 6vw, 72px);
+    --fs-stat: clamp(40px, 4.4vw, 54px);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; overflow-x: hidden; }
+  body {
+    font-family: 'Poppins', sans-serif; color: var(--text); background: #fff;
+    font-size: var(--fs-body); line-height: 1.65;
+    -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+  a { text-decoration: none; color: inherit; }
+  ::selection { background: rgba(0,174,99,.18); color: var(--green-dark); }
+  :focus:not(:focus-visible) { outline: none; }
+  :focus-visible { outline: none; box-shadow: var(--ring); border-radius: 10px; }
+  img { max-width: 100%; display: block; }
+  .container { max-width: 1320px; margin: 0 auto; padding: 0 24px; }
+  section { scroll-margin-top: 120px; }
+
+  .label {
+    color: var(--green-label); font-size: var(--fs-eyebrow); font-weight: 600;
+    letter-spacing: .14em; text-transform: uppercase; margin-bottom: 16px;
+  }
+  .label.light { color: #fff; }
+  h2.section-title {
+    font-size: var(--fs-h2); line-height: 1.12; font-weight: 600;
+    letter-spacing: -0.025em; color: var(--green-dark);
+  }
+  h2.section-title.light { color: #fff; }
+  h2.section-title .g { color: var(--green); }
+  .section-head { display: flex; flex-direction: column; }
+  .section-head.center { align-items: center; text-align: center; }
+  .section-head.center .section-title { max-width: 720px; }
+  .section-head .sub { color: var(--muted); font-size: clamp(15px, 1.3vw, 18px); line-height: 1.65; margin-top: 14px; max-width: 660px; }
+
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+    font-family: 'Poppins', sans-serif; font-weight: 500; font-size: 16px;
+    border: none; cursor: pointer; border-radius: 28px; padding: 15px 28px; white-space: nowrap;
+    transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+  }
+  .btn:hover { transform: translateY(-2px); }
+  .btn:active { transform: translateY(0); }
+  .btn-yellow { background: var(--yellow); color: #000; box-shadow: 0 6px 18px rgba(255,210,54,.35); }
+  .btn-yellow:hover { box-shadow: 0 12px 28px rgba(255,210,54,.5); }
+  .btn-white { background: #fff; color: #000; box-shadow: 0 8px 24px rgba(0,0,0,.12); }
+  .btn-white:hover { box-shadow: 0 14px 32px rgba(0,0,0,.18); }
+  .btn-outline { background: #fff; color: #000; font-weight: 600; padding: 12px 24px; border: 1px solid rgba(0,0,0,.14); box-shadow: none; }
+  .btn-outline:hover { border-color: rgba(0,0,0,.28); box-shadow: var(--shadow-sm); }
+
+  /* ---------- NAVBAR ---------- */
+  .navbar-wrap { position: fixed; top: 24px; left: 0; right: 0; z-index: 100; display: flex; justify-content: center; padding: 0 24px; }
+  .navbar {
+    width: 100%; max-width: 1320px; display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    background: rgba(255,255,255,.82); backdrop-filter: saturate(180%) blur(16px); -webkit-backdrop-filter: saturate(180%) blur(16px);
+    border: 1px solid rgba(255,255,255,.6); box-shadow: 0 6px 28px rgba(5,60,51,.07); border-radius: 999px; padding: 12px 24px;
+    transition: padding .25s ease, box-shadow .25s ease, background .25s ease;
+  }
+  .navbar.scrolled { padding: 8px 24px; box-shadow: 0 10px 34px rgba(5,60,51,.12); background: rgba(255,255,255,.92); }
+  .logo { display: flex; align-items: center; gap: 8px; }
+  .logo-mark { width: 48px; height: 48px; background: var(--green-solid); border-radius: 999px; display: flex; align-items: center; justify-content: center; }
+  .logo-mark svg { width: 26px; height: 26px; }
+  .logo-text { font-family: 'Manrope', sans-serif; font-weight: 700; font-size: 28px; letter-spacing: -0.05em; color: var(--green-dark); }
+  .nav-links { display: flex; align-items: center; gap: 24px; }
+  .nav-links a { font-size: 16px; font-weight: 400; color: #000; padding: 6px 0; white-space: nowrap; border-bottom: 2px solid transparent; transition: border-color .15s, font-weight .15s; }
+  .nav-links a.active, .nav-links a:hover { font-weight: 600; border-bottom-color: var(--star); }
+  .nav-actions { display: flex; align-items: center; gap: 12px; }
+  .nav-actions .lang { width: 48px; height: 48px; border: 1px solid rgba(0,0,0,.1); border-radius: 38px; display: flex; align-items: center; justify-content: center; font-weight: 500; font-size: 16px; background: #fff; cursor: pointer; }
+  .lang-switch { display: inline-flex; align-items: center; justify-content: center; gap: 7px; height: 48px; padding: 0 18px; border: 1px solid rgba(0,0,0,.14); border-radius: 999px; background: #fff; cursor: pointer; font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 16px; color: #000; transition: border-color .2s, box-shadow .2s, background .2s; }
+  .lang-switch:hover { border-color: rgba(0,0,0,.28); box-shadow: var(--shadow-sm); }
+  .lang-switch svg { width: 18px; height: 18px; }
+  [dir="rtl"] .hero-copy { text-align: right; }
+  [dir="rtl"] .hero-cta, [dir="rtl"] .hero-proof { justify-content: flex-start; }
+  [dir="rtl"] .about > .container > div:first-child { text-align: right; }
+  html[lang="ar"] body { font-family: 'Poppins', 'Segoe UI', Tahoma, sans-serif; }
+  .nav-toggle { display: none; background: none; border: none; cursor: pointer; }
+  .nav-toggle svg { width: 28px; height: 28px; }
+
+  /* ---------- HERO ---------- */
+  .hero { background: var(--grad); padding: 168px 0 88px; position: relative; overflow: hidden; isolation: isolate; }
+  .hero-mark { position: absolute; right: 4%; top: 50%; transform: translateY(-50%); width: 620px; height: 620px; opacity: .10; z-index: -1; }
+  .hero::after { content: ""; position: absolute; width: 720px; height: 700px; right: -160px; top: var(--py, 0px); background: rgba(255,255,255,.06); border-radius: 50% 50% 0 50%; z-index: -1; }
+  .hero::before { content: ""; position: absolute; left: -140px; bottom: -180px; width: 460px; height: 460px; border-radius: 50%; background: radial-gradient(circle, rgba(255,255,255,.16), transparent 68%); z-index: -1; pointer-events: none; }
+  .hero .container { display: grid; grid-template-columns: 1.05fr .95fr; gap: 40px; align-items: center; }
+  .hero-badge { display: inline-flex; align-items: center; gap: 6px; background: rgba(255,255,255,.14); border-radius: 40px; padding: 9px 20px; color: #fff; font-weight: 500; font-size: 14px; margin-bottom: 28px; width: fit-content; }
+  .hero h1 { font-size: var(--fs-display); line-height: 1.02; font-weight: 800; letter-spacing: -0.03em; text-transform: uppercase; color: #fff; margin-bottom: 20px; }
+  .hero p.lead { color: #fff; font-size: var(--fs-lead); line-height: 1.6; max-width: 500px; margin-bottom: 32px; opacity: .92; }
+  .hero-cta { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 36px; }
+  .btn-play { background: #fff; color: #000; border-radius: 999px; padding: 15px 26px; font-size: 16px; font-weight: 500; display: inline-flex; align-items: center; gap: 10px; }
+  .btn-play .tri { width: 0; height: 0; border-left: 13px solid #000; border-top: 8px solid transparent; border-bottom: 8px solid transparent; margin-left: 2px; }
+  .hero-proof { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+  .avatars { display: flex; }
+  .avatars span, .avatars img { width: 48px; height: 48px; border-radius: 50%; border: 3px solid #fff; margin-left: -16px; object-fit: cover; background-size: cover; transition: transform .2s ease; }
+  .avatars span:first-child, .avatars img:first-child { margin-left: 0; }
+  .avatars img:hover, .avatars span:hover { transform: translateY(-4px); }
+  .proof-divider { width: 1px; height: 42px; background: rgba(255,255,255,.4); }
+  .proof-stars { display: flex; align-items: center; gap: 2px; }
+  .proof-stars svg { width: 16px; height: 16px; }
+  .proof-stars b { color: #fff; font-weight: 600; font-size: 14px; margin-left: 6px; }
+  .proof-text { color: #fff; font-size: 14px; opacity: .92; margin-top: 3px; }
+  .proof-text b { font-weight: 600; }
+  .hero-visual { display: flex; justify-content: center; }
+
+  /* phone mockup */
+  .phone { width: 290px; height: 600px; background: var(--grad); border-radius: 44px; box-shadow: 0 30px 60px rgba(0,0,0,.28), inset 0 0 0 10px rgba(255,255,255,.08); padding: 16px 14px; position: relative; color: #fff; transform: rotate(-1deg); }
+  .phone .notch { width: 120px; height: 26px; background: rgba(0,0,0,.25); border-radius: 0 0 16px 16px; margin: 0 auto 18px; }
+  .phone .ph-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+  .phone .ph-top .hi { font-weight: 700; font-size: 15px; }
+  .phone .ph-top .loc { font-size: 11px; opacity: .85; }
+  .phone .pts { background: rgba(255,255,255,.2); border-radius: 999px; padding: 6px 12px; font-weight: 700; font-size: 12px; display: flex; align-items: center; gap: 6px; }
+  .phone .pts .dot { width: 14px; height: 14px; border-radius: 50%; background: radial-gradient(circle at 30% 30%, #FFCD0F, #E67505); }
+  .phone .promo { background: rgba(255,255,255,.18); border-radius: 999px; padding: 10px; display: flex; align-items: center; gap: 10px; margin-bottom: 20px; }
+  .phone .promo .pimg { width: 54px; height: 54px; border-radius: 50%; background: #fff; flex: none; display: flex; align-items: center; justify-content: center; font-size: 26px; }
+  .phone .promo .ptext { font-size: 11px; line-height: 1.4; }
+  .phone .bar { height: 5px; background: rgba(255,255,255,.25); border-radius: 99px; margin-top: 6px; overflow: hidden; }
+  .phone .bar > i { display: block; height: 100%; width: 58%; background: #FFBB46; border-radius: 99px; }
+  .phone .wheel { position: relative; height: 250px; margin: 10px 0; }
+  .phone .wheel .center { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 86px; height: 86px; background: #fff; color: #000; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; }
+  .phone .wheel .center .ico { font-size: 26px; }
+  .phone .wheel .cat { position: absolute; width: 64px; height: 64px; border-radius: 50%; background: rgba(255,255,255,.2); display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 9px; gap: 2px; }
+  .phone .wheel .cat .ico { font-size: 22px; }
+  .phone .wheel .c1 { top: 0; left: 50%; transform: translateX(-50%); }
+  .phone .wheel .c2 { top: 30%; left: 0; }
+  .phone .wheel .c3 { top: 30%; right: 0; }
+  .phone .wheel .c4 { bottom: 0; left: 18%; }
+  .phone .wheel .c5 { bottom: 0; right: 18%; }
+  .phone .tabbar { position: absolute; bottom: 14px; left: 14px; right: 14px; display: flex; justify-content: space-around; align-items: center; font-size: 9px; font-weight: 600; }
+  .phone .tabbar .tab { display: flex; flex-direction: column; align-items: center; gap: 3px; opacity: .6; }
+  .phone .tabbar .tab.active { opacity: 1; color: #FFBB46; }
+  .phone .tabbar .tab .ico { font-size: 18px; }
+
+  /* ---------- PARTNERS ---------- */
+  .partners { padding: 80px 0; text-align: center; }
+  .partners .ptitle { font-size: 15px; color: var(--muted); margin-bottom: 32px; }
+  .partners .logos { display: flex; flex-wrap: wrap; gap: 24px 56px; align-items: center; justify-content: center; }
+  .partners .logos span { font-weight: 700; font-size: 22px; color: #9aa0a6; filter: grayscale(1); opacity: .7; transition: filter .3s, opacity .3s, transform .3s; }
+  .partners .logos span:hover { filter: grayscale(0); opacity: 1; transform: scale(1.06); }
+
+  /* ---------- ABOUT ---------- */
+  .about { padding: 96px 0; }
+  .about .container { display: grid; grid-template-columns: 520px 1fr; gap: 56px; align-items: center; }
+  .about h2 { margin: 0 0 24px; }
+  .about p { color: var(--muted); font-size: clamp(16px, 1.25vw, 17.5px); line-height: 1.75; margin-bottom: 22px; }
+  .about .more { font-weight: 600; font-size: 16px; text-decoration: underline; text-underline-offset: 4px; color: var(--green-label); }
+  .about-media { display: flex; flex-direction: column; gap: 20px; }
+  .about-imgs { display: flex; gap: 20px; }
+  .about-imgs .ph { flex: 1; height: 300px; border-radius: 24px; background: linear-gradient(135deg,#bfe9d6,#7fd1ad); box-shadow: var(--shadow-md); display: flex; align-items: center; justify-content: center; font-size: 56px; transition: transform .35s cubic-bezier(.16,1,.3,1); }
+  .about-imgs .ph:hover { transform: translateY(-6px); }
+  .carousel-nav { display: flex; gap: 16px; align-items: center; }
+  .carousel-nav button { width: 44px; height: 44px; border-radius: 50%; border: 1px solid #ddd; background: #fff; cursor: pointer; font-size: 18px; color: var(--green); transition: background .2s, transform .2s; }
+  .carousel-nav button:hover { background: var(--bg-soft); transform: translateY(-2px); }
+  .carousel-nav .dash { flex: 1; height: 2px; background: #e6e6e6; max-width: 120px; }
+  .carousel-nav .dash i { display: block; width: 40%; height: 100%; background: var(--green); }
+
+  /* ---------- RECYCLE / MATERIALS RING ---------- */
+  .recycle { padding: 96px 0; background: var(--bg-soft); text-align: center; }
+  .recycle .section-head { margin-bottom: 40px; align-items: center; }
+  .material-cluster { display: flex; flex-direction: column; align-items: center; }
+  .cluster-row { display: flex; justify-content: center; }
+  .cluster-row.offset { margin-top: -48px; }
+  .bubble { position: relative; width: 158px; height: 158px; flex: none; }
+  .bubble + .bubble { margin-left: -28px; }
+  .bubble-img { width: 100%; height: 100%; border-radius: 50%; overflow: hidden; background: #fff; border: 5px solid var(--bg-soft); box-shadow: var(--shadow-md); transition: box-shadow .35s ease; }
+  .bubble-img img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.08); transition: transform .4s cubic-bezier(.16,1,.3,1); }
+  .bubble:hover { z-index: 10; }
+  .bubble:hover .bubble-img { box-shadow: var(--shadow-lg); }
+  .bubble:hover .bubble-img img { transform: scale(1.18); }
+  .bubble .tip {
+    position: absolute; bottom: calc(100% + 12px); left: 50%; transform: translateX(-50%) translateY(6px);
+    background: var(--green-dark); color: #fff; font-size: 13px; font-weight: 500; line-height: 1;
+    padding: 8px 12px; border-radius: 8px; white-space: nowrap; pointer-events: none;
+    opacity: 0; visibility: hidden; box-shadow: var(--shadow-md);
+    transition: opacity .2s ease, transform .2s ease, visibility .2s; z-index: 5;
+  }
+  .bubble .tip::after { content: ""; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); border: 6px solid transparent; border-top-color: var(--green-dark); }
+  .bubble:hover .tip, .bubble:focus-visible .tip { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
+  .recycle .btn { margin-top: 48px; }
+
+  /* ---------- HOW IT WORKS (steps) ---------- */
+  .how { padding: 96px 0; text-align: center; }
+  .how .section-head { margin-bottom: 48px; align-items: center; }
+  .steps { display: flex; flex-wrap: wrap; justify-content: center; gap: 28px; max-width: 1180px; margin: 0 auto; }
+  .step { width: 250px; display: flex; flex-direction: column; align-items: center; gap: 12px; }
+  .step .disc { position: relative; width: 130px; height: 130px; border-radius: 50%; background: var(--grad); display: flex; align-items: center; justify-content: center; font-size: 56px; box-shadow: 0 12px 28px rgba(0,174,99,.22); }
+  .step .disc .badge { position: absolute; left: 4px; bottom: 4px; width: 40px; height: 40px; border-radius: 50%; background: var(--green-dark); border: 3px solid #fff; color: #fff; font-weight: 700; font-size: 13px; display: flex; align-items: center; justify-content: center; }
+  .step h4 { font-size: var(--fs-h4); font-weight: 600; color: var(--green-dark); margin-top: 6px; }
+  .step p { font-size: var(--fs-body-sm); line-height: 1.65; color: var(--muted); max-width: 220px; }
+
+  /* ---------- REWARDS ---------- */
+  .rewards { padding: 96px 0; text-align: center; }
+  .rewards .section-head { margin-bottom: 48px; align-items: center; }
+  .reward-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+  .reward-card { height: 240px; border-radius: 24px; background: #fff; border: 1px solid var(--hairline); box-shadow: var(--shadow-sm); position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: flex-end; padding: 24px; text-align: left; }
+  .reward-card::before { content: ""; position: absolute; inset: 0 0 78px 0; background: linear-gradient(135deg, rgba(0,174,99,.12), rgba(0,174,139,.22)); }
+  .reward-card .chip { position: absolute; top: 22px; left: 22px; width: 56px; height: 56px; border-radius: 16px; background: #fff; box-shadow: var(--shadow-md); display: flex; align-items: center; justify-content: center; font-size: 28px; transition: transform .35s cubic-bezier(.16,1,.3,1); }
+  .reward-card:hover .chip { transform: translateY(-4px) rotate(-6deg); }
+  .reward-card h5 { font-size: 17px; color: var(--green-dark); position: relative; }
+  .reward-card span { font-size: 14px; color: var(--muted); position: relative; }
+  .reward-card::after { content: "\2192"; position: absolute; right: 22px; bottom: 22px; font-size: 20px; color: var(--green); opacity: 0; transform: translateX(-6px); transition: opacity .3s, transform .3s; }
+  .reward-card:hover::after { opacity: 1; transform: translateX(0); }
+
+  /* ---------- IMPACT (stats) ---------- */
+  .impact { padding: 96px 0; background: var(--bg-soft); text-align: center; }
+  .impact .section-head { margin-bottom: 48px; align-items: center; }
+  .stat-grid { display: flex; gap: 28px; flex-wrap: wrap; }
+  .stat { flex: 1; min-width: 260px; background: #fff; border: 1px solid var(--hairline); border-radius: 20px; padding: 48px 32px; box-shadow: var(--shadow-sm); transition: transform .35s cubic-bezier(.16,1,.3,1), box-shadow .35s ease; }
+  .stat:hover { transform: translateY(-8px); box-shadow: var(--shadow-lg); }
+  .stat .big { font-size: var(--fs-stat); font-weight: 700; letter-spacing: -0.03em; color: var(--green-dark); }
+  .stat .cap { font-size: 16px; font-weight: 500; color: var(--muted); margin-top: 8px; }
+
+  /* ---------- TESTIMONIALS ---------- */
+  .testi { padding: 96px 0; text-align: center; }
+  .testi .section-head { margin-bottom: 48px; align-items: center; }
+  .testi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+  .testi-card { position: relative; background: #fff; border: 1px solid var(--hairline); border-radius: 24px; padding: 28px; text-align: left; display: flex; flex-direction: column; gap: 16px; box-shadow: var(--shadow-sm); transition: transform .35s cubic-bezier(.16,1,.3,1), box-shadow .35s ease; overflow: hidden; }
+  .testi-card::before { content: "\201C"; position: absolute; top: 6px; right: 22px; font-family: Georgia, serif; font-size: 90px; line-height: 1; color: rgba(0,174,99,.10); }
+  .testi-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-lg); }
+  .stars { display: flex; gap: 4px; font-size: 20px; color: var(--star); position: relative; }
+  .stars .off { color: #D9D9D9; }
+  .testi-card .quote { color: var(--muted); font-size: clamp(15px, 1.1vw, 16.5px); line-height: 1.65; }
+  .testi-card .who { display: flex; align-items: center; gap: 12px; }
+  .testi-card .who .av { width: 48px; height: 48px; border-radius: 50%; background: linear-gradient(135deg,#bfe9d6,#7fd1ad); }
+  .testi-card .who .nm { font-weight: 600; font-size: 17px; color: #333; }
+  .testi-card .who .role { font-size: var(--fs-body-sm); color: var(--muted); }
+
+  /* ---------- BLOG ---------- */
+  .blog { padding: 96px 0; background: var(--bg-soft); text-align: center; }
+  .blog .section-head { margin-bottom: 48px; align-items: center; }
+  .blog-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+  .blog-card { background: #fff; border: 1px solid var(--hairline); border-radius: 20px; overflow: hidden; text-align: left; box-shadow: var(--shadow-sm); transition: transform .35s cubic-bezier(.16,1,.3,1), box-shadow .35s ease; }
+  .blog-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-lg); }
+  .blog-card .pic { height: 170px; background: linear-gradient(135deg,#bfe9d6,#7fd1ad); display: flex; align-items: center; justify-content: center; font-size: 44px; }
+  .blog-card .body { padding: 18px; }
+  .blog-card h5 { font-size: 17px; line-height: 1.45; color: var(--green-dark); min-height: 70px; }
+  .blog-card .date { font-size: var(--fs-body-sm); color: var(--muted); margin-top: 8px; }
+  .blog .btn { margin-top: 40px; }
+
+  /* ---------- FAQ + NEWSLETTER ---------- */
+  .nf { padding: 96px 0; }
+  .nf .container { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: start; }
+  .nf .left h2 { margin: 0 0 16px; }
+  .nf .left p { color: var(--muted); font-size: 16px; line-height: 1.7; margin-bottom: 28px; }
+  .faq { display: flex; flex-direction: column; gap: 14px; }
+  .faq details { border: 1px solid var(--hairline); border-radius: 18px; padding: 22px 24px; background: #fff; box-shadow: var(--shadow-sm); transition: background .2s, box-shadow .2s, border-color .2s; }
+  .faq details:hover { box-shadow: var(--shadow-md); }
+  .faq details[open] { background: #fff; border-color: rgba(0,174,99,.25); box-shadow: var(--shadow-md); }
+  .faq summary::after { transition: transform .25s ease; }
+  .faq details[open] summary::after { transform: rotate(180deg); }
+  .faq summary { list-style: none; cursor: pointer; font-weight: 600; font-size: 18px; color: rgba(0,0,0,.9); display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary::after { content: "+"; font-size: 24px; color: var(--green); }
+  .faq details[open] summary::after { content: "\2212"; }
+  .faq .ans { margin-top: 14px; color: var(--muted); font-size: var(--fs-body); line-height: 1.65; }
+
+  /* ---------- CTA BANNER ---------- */
+  .cta-sec { padding: 0 0 96px; }
+  .cta-banner { background: var(--grad-yellow); border-radius: 24px; padding: 72px; position: relative; overflow: hidden; }
+  .cta-banner h2 { font-size: var(--fs-h2); line-height: 1.1; font-weight: 600; letter-spacing: -0.025em; color: #000; max-width: 540px; margin-bottom: 14px; position: relative; z-index: 1; }
+  .cta-banner p { font-size: 16px; line-height: 1.6; color: #000; opacity: .75; max-width: 520px; margin-bottom: 28px; position: relative; z-index: 1; }
+  .cta-banner .btn { position: relative; z-index: 1; }
+  .cta-banner::after { content:""; position:absolute; right:-80px; top:-80px; width: 420px; height: 420px; border-radius: 50%; background: rgba(255,255,255,.25); }
+
+  /* ---------- FOOTER ---------- */
+  footer { position: relative; background: var(--green-dark); color: #fff; padding: 72px 0 32px; border-radius: 40px 40px 0 0; overflow: hidden; }
+  footer::before { content: ""; position: absolute; inset: 0; background: radial-gradient(760px 380px at 88% -8%, rgba(0,174,139,.28), transparent 60%); pointer-events: none; }
+  .foot-inner { position: relative; z-index: 1; }
+  .foot-top { display: grid; grid-template-columns: 1.5fr 2fr 1.3fr; gap: 48px; }
+  .foot-brand { max-width: 320px; }
+  .foot-brand .logo { margin-bottom: 18px; }
+  .foot-brand .logo-text { color: #fff; }
+  .foot-brand .tag { font-family: 'Roboto'; font-size: 14px; line-height: 1.7; opacity: .8; margin-bottom: 22px; }
+  .app-badges { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 24px; }
+  .app-badge { display: inline-flex; align-items: center; gap: 9px; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.16); border-radius: 12px; padding: 8px 14px; transition: background .2s, transform .15s; }
+  .app-badge:hover { background: rgba(255,255,255,.16); transform: translateY(-2px); }
+  .app-badge svg { width: 22px; height: 22px; }
+  .app-badge .ab-t { display: flex; flex-direction: column; line-height: 1.15; }
+  .app-badge .ab-t small { font-size: 9px; opacity: .7; letter-spacing: .04em; }
+  .app-badge .ab-t b { font-size: 13px; font-weight: 600; }
+  .socials { display: flex; gap: 10px; }
+  .socials a { width: 38px; height: 38px; border-radius: 50%; background: rgba(255,255,255,.1); display: flex; align-items: center; justify-content: center; color: #fff; transition: background .2s, transform .15s; }
+  .socials a svg { width: 18px; height: 18px; }
+  .socials a:hover { background: var(--green); transform: translateY(-3px); }
+  .foot-links { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+  .foot-col h5 { font-size: 15px; font-weight: 600; margin-bottom: 20px; }
+  .foot-col a { display: block; font-family: 'Roboto'; font-size: 14px; opacity: .78; margin-bottom: 14px; width: fit-content; transition: opacity .2s, transform .2s; }
+  .foot-col a:hover { opacity: 1; transform: translateX(4px); }
+  .foot-news h5 { font-size: 15px; font-weight: 600; margin-bottom: 12px; }
+  .foot-news p { font-family: 'Roboto'; font-size: 14px; opacity: .78; line-height: 1.6; margin-bottom: 16px; }
+  .foot-form { display: flex; align-items: center; gap: 8px; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.16); border-radius: 999px; padding: 6px 6px 6px 18px; transition: border-color .2s, background .2s; }
+  .foot-form:focus-within { border-color: rgba(255,255,255,.4); background: rgba(255,255,255,.12); }
+  .foot-form input { flex: 1; min-width: 0; background: transparent; border: none; outline: none; color: #fff; font-family: 'Poppins', sans-serif; font-size: 14px; }
+  .foot-form input::placeholder { color: rgba(255,255,255,.55); }
+  .foot-form button { width: 40px; height: 40px; flex: none; border: none; border-radius: 50%; background: var(--yellow); color: #000; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: transform .15s, box-shadow .2s; }
+  .foot-form button:hover { transform: translateY(-2px); box-shadow: 0 8px 18px rgba(255,210,54,.4); }
+  .foot-form button svg { width: 18px; height: 18px; }
+  .foot-mini { margin-top: 18px; font-family: 'Roboto'; font-size: 13px; opacity: .7; line-height: 1.8; }
+  .foot-divider { height: 1px; background: rgba(255,255,255,.12); margin: 48px 0 24px; }
+  .foot-bottom { position: relative; z-index: 1; display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; font-family: 'Roboto'; font-size: 13px; opacity: .85; }
+  .foot-legal { display: flex; gap: 22px; }
+  .foot-legal a { opacity: .85; transition: opacity .2s; }
+  .foot-legal a:hover { opacity: 1; text-decoration: underline; }
+  .foot-watermark { position: absolute; left: 0; right: 0; bottom: -22px; text-align: center; font-family: 'Manrope', sans-serif; font-weight: 800; letter-spacing: -.04em; font-size: clamp(90px, 19vw, 260px); line-height: 1; color: rgba(255,255,255,.045); pointer-events: none; user-select: none; z-index: 0; }
+
+  /* ---------- FLOATING CHAT ---------- */
+  .chat-fab { position: fixed; right: 32px; bottom: 32px; z-index: 90; width: 64px; height: 64px; border-radius: 999px; background: var(--yellow); box-shadow: 0 4px 16px rgba(0,0,0,.2); display: flex; align-items: center; justify-content: center; font-size: 28px; cursor: pointer; transition: transform .15s; }
+  .chat-fab:hover { transform: scale(1.08); }
+
+  /* ---------- SCROLL ANIMATIONS ---------- */
+  .scroll-progress { position: fixed; top: 0; left: 0; height: 3px; width: 0; background: linear-gradient(90deg, var(--yellow), #FFBB46); z-index: 200; transition: width .12s linear; }
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal { opacity: 0; transform: translateY(34px); transition: opacity .7s cubic-bezier(.16,1,.3,1), transform .7s cubic-bezier(.16,1,.3,1); will-change: opacity, transform; }
+    .reveal.r-left { transform: translateX(-44px); }
+    .reveal.r-right { transform: translateX(44px); }
+    .reveal.r-scale { transform: scale(.9); }
+    .reveal.in { opacity: 1; transform: none; }
+    @keyframes floatY { 0%,100% { transform: translateY(0) rotate(-1deg); } 50% { transform: translateY(-18px) rotate(-1deg); } }
+    .phone { animation: floatY 6s ease-in-out infinite; }
+    @keyframes hubPulse { 0%,100% { box-shadow: 0 0 0 0 rgba(255,255,255,.35); } 50% { box-shadow: 0 0 0 14px rgba(255,255,255,0); } }
+    .phone .wheel .center { animation: hubPulse 2.6s ease-out infinite; }
+    @keyframes badgeFloat { 0%,100%{ transform: translateY(0);} 50%{ transform: translateY(-4px);} }
+    .hero-badge { animation: badgeFloat 4s ease-in-out infinite; }
+    @keyframes spin { to { transform: translateY(-50%) rotate(360deg); } }
+    .hero-mark { animation: spin 60s linear infinite; transform-origin: center; }
+    @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+    .marquee { overflow: hidden; width: 100%; -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
+    .marquee-track { display: flex !important; flex-wrap: nowrap !important; width: max-content; gap: 56px; align-items: center; animation: marquee 30s linear infinite; }
+    .marquee:hover .marquee-track { animation-play-state: paused; }
+    @keyframes fabBob { 0%,100%{ transform: translateY(0);} 50%{ transform: translateY(-6px);} }
+    .chat-fab { animation: fabBob 3s ease-in-out infinite; }
+  }
+  .bubble, .step .disc, .reward-card, .blog-card .pic { transition: transform .35s cubic-bezier(.16,1,.3,1), box-shadow .35s ease; }
+  .bubble:hover { transform: translateY(-6px) scale(1.05); }
+  .step:hover .disc { transform: translateY(-8px) scale(1.05); }
+  .reward-card:hover { transform: translateY(-8px); box-shadow: 0 20px 44px rgba(5,60,51,.10); }
+  .blog-card:hover .pic { transform: scale(1.05); }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width: 1100px) {
+    .nav-links { display: none; }
+    .nav-toggle { display: block; }
+    .nav-actions .lang, .nav-actions .btn-outline { display: none; }
+    .hero .container, .about .container, .nf .container { grid-template-columns: 1fr; }
+    .blog-grid { grid-template-columns: repeat(2, 1fr); }
+    .reward-grid, .testi-grid { grid-template-columns: repeat(2, 1fr); }
+    .foot-top { grid-template-columns: 1fr 1fr; }
+    .foot-brand { grid-column: 1 / -1; max-width: none; }
+  }
+  @media (max-width: 860px) {
+    .partners, .about, .recycle, .how, .rewards, .impact, .testi, .blog, .nf { padding: 64px 0; }
+    .about .container { gap: 36px; }
+    .stat-grid { flex-direction: column; }
+    .stat { flex: 1 1 100%; min-width: 0; width: 100%; }
+  }
+  @media (max-width: 640px) {
+    .hero { padding: 124px 0 56px; }
+    .reward-grid, .testi-grid, .blog-grid { grid-template-columns: 1fr; }
+    .cta-banner { padding: 40px 24px; }
+    .cta-banner::after { width: 240px; height: 240px; right: -60px; top: -60px; }
+    .navbar { padding: 8px 12px 8px 16px; gap: 12px; }
+    .nav-actions .btn-yellow { display: none; }
+    .lang-switch { width: 48px; padding: 0; }
+    .lang-switch #langLabel { display: none; }
+    .logo-text { font-size: 22px; }
+    .logo-mark { width: 42px; height: 42px; }
+    .foot-top { grid-template-columns: 1fr; gap: 36px; }
+    .foot-links { gap: 24px 20px; }
+    .foot-bottom { flex-direction: column; align-items: flex-start; gap: 12px; }
+    .cluster-row { flex-wrap: wrap; gap: 14px; }
+    .cluster-row.offset { margin-top: 14px; }
+    .bubble + .bubble { margin-left: 0; }
+    .hero-cta { gap: 12px; }
+    .hero-cta .btn, .hero-cta .btn-play { width: 100%; }
+  }
+  @media (max-width: 380px) {
+    .bubble { width: 132px; height: 132px; }
+  }
+  .menu-open .nav-links { display: flex; position: absolute; top: 80px; right: 24px; left: 24px; flex-direction: column; background: #fff; border-radius: 24px; padding: 24px; box-shadow: 0 8px 24px rgba(0,0,0,.12); gap: 12px; }
+</style>
+</head>
+<body>
+
+<div class="scroll-progress" id="sp"></div>
+
+<!-- NAVBAR -->
+<div class="navbar-wrap">
+  <nav class="navbar">
+    <a href="#home" class="logo">
+      <span class="logo-mark"><svg viewBox="0 0 32 32" fill="#fff"><rect x="6" y="10" width="20" height="3.4" rx="1.7"/><rect x="6" y="15.3" width="15" height="3.4" rx="1.7"/><rect x="6" y="20.6" width="10" height="3.4" rx="1.7"/></svg></span>
+      <span class="logo-text">plstka</span>
+    </a>
+    <div class="nav-links">
+      <a href="#home" class="active" data-en="Home" data-ar="الرئيسية">Home</a>
+      <a href="about.html" data-en="About" data-ar="من نحن">About</a>
+      <a href="products.html" data-en="Products" data-ar="المنتجات">Products</a>
+      <a href="blog.html" data-en="Blog" data-ar="المدونة">Blog</a>
+      <a href="partners.html" data-en="Partners" data-ar="الشركاء">Partners</a>
+      <a href="careers.html" data-en="Careers" data-ar="الوظائف">Careers</a>
+      <a href="contact.html" data-en="Contact us" data-ar="تواصل معنا">Contact us</a>
+    </div>
+    <div class="nav-actions">
+      <button class="lang-switch" id="langSwitch" aria-label="Switch language">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#053C33" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M3 12h18" stroke-linecap="round"/><path d="M12 3c2.6 2.6 2.6 15.4 0 18M12 3c-2.6 2.6-2.6 15.4 0 18" stroke-linecap="round"/></svg>
+        <span id="langLabel">EN</span>
+      </button>
+      <a href="plstka-business.html" class="btn btn-outline" data-en="For Business" data-ar="للشركات">For Business</a>
+      <a href="#cta" class="btn btn-yellow" style="padding:12px 24px;" data-en="Download app" data-ar="حمّل التطبيق">Download app</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+    </div>
+  </nav>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <svg class="hero-mark" viewBox="0 0 100 100" fill="none"><path d="M50 8 L62 28 H38 Z M82 60 L70 40 L88 38 Z M18 60 L30 40 L12 38 Z M30 72 H70 L60 90 H40 Z" stroke="#fff" stroke-width="2" fill="rgba(255,255,255,.25)"/></svg>
+  <div class="container">
+    <div class="hero-copy">
+      <span class="hero-badge" data-en="&#9851; AI Recycling app in the Middle East" data-ar="&#9851; تطبيق إعادة التدوير بالذكاء الاصطناعي في الشرق الأوسط">&#9851; AI Recycling app in the Middle East</span>
+      <h1 data-en="Turn your trash into rewards" data-ar="حوّل نفاياتك إلى مكافآت">Turn your trash into rewards</h1>
+      <p class="lead" data-en="Plstka turns your recyclable items into real points — redeemable for exclusive discounts and offers from top brand partners." data-ar="تحوّل بلستكة موادك القابلة لإعادة التدوير إلى نقاط حقيقية — قابلة للاستبدال بخصومات وعروض حصرية من كبرى العلامات التجارية.">Plstka turns your recyclable items into real points &mdash; redeemable for exclusive discounts and offers from top brand partners.</p>
+      <div class="hero-cta">
+        <a href="#cta" class="btn btn-yellow" data-en="Download app" data-ar="حمّل التطبيق">Download app</a>
+        <a href="#about" class="btn-play"><span class="tri"></span> <span data-en="Learn more" data-ar="اعرف المزيد">Learn more</span></a>
+      </div>
+      <div class="hero-proof">
+        <div class="avatars">
+          <img src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?q=80&w=200" alt="User" />
+          <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=200" alt="User" />
+          <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=200&h=200&auto=format&fit=crop" alt="User" />
+          <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="User" />
+        </div>
+        <div class="proof-divider"></div>
+        <div class="proof-info">
+          <div class="proof-stars">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#FFC107" stroke="#FFC107" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#FFC107" stroke="#FFC107" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#FFC107" stroke="#FFC107" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#FFC107" stroke="#FFC107" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#FFC107" stroke="#FFC107" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/></svg>
+            <b>5.0</b>
+          </div>
+          <div class="proof-text">Trusted by <b>60K+</b> users</div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="phone">
+        <div class="notch"></div>
+        <div class="ph-top">
+          <div><div class="hi">Welcome back Ahmed &#128075;</div><div class="loc">&#128205; Tanta, Egypt &#9662;</div></div>
+          <div class="pts"><span class="dot"></span> 100</div>
+        </div>
+        <div class="promo">
+          <div class="pimg">&#127873;</div>
+          <div class="ptext">Earn 200 points more to reach <b>Platinum</b><div class="bar"><i></i></div></div>
+        </div>
+        <div class="wheel">
+          <div class="center"><span class="ico">&#9851;</span>Recycle</div>
+          <div class="cat c1"><span class="ico">&#127870;</span>Plastic</div>
+          <div class="cat c2"><span class="ico">&#129371;</span>Aluminum</div>
+          <div class="cat c3"><span class="ico">&#128241;</span>E-waste</div>
+          <div class="cat c4"><span class="ico">&#128230;</span>Paper</div>
+          <div class="cat c5"><span class="ico">&#128267;</span>Battery</div>
+        </div>
+        <div class="tabbar">
+          <div class="tab active"><span class="ico">&#127968;</span>Home</div>
+          <div class="tab"><span class="ico">&#128230;</span>Orders</div>
+          <div class="tab"><span class="ico">&#127873;</span>Rewards</div>
+          <div class="tab"><span class="ico">&#128276;</span>Alerts</div>
+          <div class="tab"><span class="ico">&#9776;</span>Menu</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PARTNERS -->
+<section class="partners" id="partners">
+  <div class="container">
+    <p class="ptitle">featured by 100+ programs around the world</p>
+    <div class="logos">
+      <span>nilepreneurs</span>
+      <span>icealex</span>
+      <span>Google for Startups</span>
+      <span>Microsoft</span>
+      <span>flickr</span>
+      <span>tiec</span>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="container">
+    <div>
+      <span class="label">About plstka</span>
+      <h2 class="section-title">We are Building the Future of Recycling</h2>
+      <p>Plstka is a leading AI-powered recycling platform in the Middle East region, transforming how waste is managed and monetized. Founded in 2021, we began in Egypt's Delta and are now expanding globally.</p>
+      <p>We combine a gamified mobile experience with a powerful B2B platform to optimize waste collection and empower micro-earners &mdash; all while accelerating the shift toward a circular economy.</p>
+      <a href="#how" class="more">Read more</a>
+    </div>
+    <div class="about-media">
+      <div class="about-imgs">
+        <div class="ph">&#129309;</div>
+        <div class="ph">&#127881;</div>
+      </div>
+      <div class="carousel-nav">
+        <button aria-label="Previous">&#8592;</button>
+        <button aria-label="Next">&#8594;</button>
+        <div class="dash"><i></i></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RECYCLE / MATERIALS -->
+<section class="recycle" id="recycle">
+  <div class="container">
+    <div class="section-head center">
+      <span class="label">What we recycle</span>
+      <h2 class="section-title">Materials we turn into <span class="g">real value</span></h2>
+      <p class="sub">From plastics to electronics, we accept a wide range of recyclable materials and reward you for every kilogram.</p>
+    </div>
+    <div class="material-cluster">
+      <div class="cluster-row">
+        <div class="bubble" tabindex="0" aria-label="Steel"><div class="bubble-img"><img src="assets/materials/steel.png" alt="Steel pipe" /></div><span class="tip">Steel</span></div>
+        <div class="bubble" tabindex="0" aria-label="Copper"><div class="bubble-img"><img src="assets/materials/copper.png" alt="Copper wire" /></div><span class="tip">Copper</span></div>
+        <div class="bubble" tabindex="0" aria-label="Aluminum"><div class="bubble-img"><img src="assets/materials/aluminum.png" alt="Aluminum profiles" /></div><span class="tip">Aluminum</span></div>
+        <div class="bubble" tabindex="0" aria-label="Cans"><div class="bubble-img"><img src="assets/materials/cans.png" alt="Metal cans" /></div><span class="tip">Cans</span></div>
+        <div class="bubble" tabindex="0" aria-label="Cardboard"><div class="bubble-img"><img src="assets/materials/cardboard.png" alt="Cardboard" /></div><span class="tip">Cardboard</span></div>
+        <div class="bubble" tabindex="0" aria-label="Paper"><div class="bubble-img"><img src="assets/materials/paper.png" alt="Paper" /></div><span class="tip">Paper</span></div>
+      </div>
+      <div class="cluster-row offset">
+        <div class="bubble" tabindex="0" aria-label="Plastic"><div class="bubble-img"><img src="assets/materials/plastic.png" alt="Plastic bottles" /></div><span class="tip">Plastic</span></div>
+        <div class="bubble" tabindex="0" aria-label="Jugs"><div class="bubble-img"><img src="assets/materials/jugs.png" alt="Plastic jugs" /></div><span class="tip">Jugs</span></div>
+        <div class="bubble" tabindex="0" aria-label="Glass"><div class="bubble-img"><img src="assets/materials/glass.png" alt="Glass jar" /></div><span class="tip">Glass</span></div>
+        <div class="bubble" tabindex="0" aria-label="Electronics"><div class="bubble-img"><img src="assets/materials/electronics.png" alt="Electronics" /></div><span class="tip">Electronics</span></div>
+      </div>
+    </div>
+    <a href="#cta" class="btn btn-yellow">Yalla Swap</a>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how" id="how">
+  <div class="container">
+    <div class="section-head center">
+      <span class="label">How it Works</span>
+      <h2 class="section-title">Start earning in <span class="g">4 steps</span></h2>
+    </div>
+    <div class="steps">
+      <div class="step"><div class="disc">&#9851;<span class="badge">01</span></div><h4>Collect</h4><p>Items like plastic, paper, and other recyclable materials.</p></div>
+      <div class="step"><div class="disc">&#128666;<span class="badge">02</span></div><h4>Swap</h4><p>Schedule a pickup through the app at your convenience.</p></div>
+      <div class="step"><div class="disc">&#129309;<span class="badge">03</span></div><h4>Earn</h4><p>Earn points once our Handler pickup and verify your items.</p></div>
+      <div class="step"><div class="disc">&#127873;<span class="badge">04</span></div><h4>Redeem</h4><p>Use your points to unlock discounts from our partners.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- REWARDS -->
+<section class="rewards" id="rewards">
+  <div class="container">
+    <div class="section-head center">
+      <span class="label">Rewards You'll Love</span>
+      <h2 class="section-title">Swap more, Earn more</h2>
+    </div>
+    <div class="reward-grid">
+      <div class="reward-card"><div class="chip">&#127828;</div><h5>Food &amp; Beverage</h5><span>Discounts at partner restaurants</span></div>
+      <div class="reward-card"><div class="chip">&#128657;</div><h5>Healthcare</h5><span>Pharmacy &amp; clinic vouchers</span></div>
+      <div class="reward-card"><div class="chip">&#128652;</div><h5>Transport</h5><span>Ride credits &amp; fuel offers</span></div>
+      <div class="reward-card"><div class="chip">&#128722;</div><h5>Shopping</h5><span>Retail coupons &amp; cashback</span></div>
+      <div class="reward-card"><div class="chip">&#127909;</div><h5>Entertainment</h5><span>Cinema &amp; streaming deals</span></div>
+      <div class="reward-card"><div class="chip">&#127891;</div><h5>Education</h5><span>Course &amp; workshop discounts</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- IMPACT -->
+<section class="impact" id="impact">
+  <div class="container">
+    <div class="section-head center">
+      <span class="label">Our Impact</span>
+      <h2 class="section-title">Together, We're Making a Difference</h2>
+    </div>
+    <div class="stat-grid">
+      <div class="stat"><div class="big">1,000</div><div class="cap">Awareness campaigns</div></div>
+      <div class="stat"><div class="big">2.4M+</div><div class="cap">Items Recycled</div></div>
+      <div class="stat"><div class="big">840T</div><div class="cap">CO&#8322; Saved</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testi" id="reviews">
+  <div class="container">
+    <div class="section-head center">
+      <span class="label">Testimonials</span>
+      <h2 class="section-title">What Our Community Says</h2>
+    </div>
+    <div class="testi-grid">
+      <div class="testi-card">
+        <div class="stars">&#9733;&#9733;&#9733;&#9733;<span class="off">&#9733;</span></div>
+        <p class="quote">Super easy to use and the pickup was right on time. I love watching my points grow every single week!</p>
+        <div class="who"><div class="av"></div><div><div class="nm">Savannah Nguyen</div><div class="role">15 Mar 2025</div></div></div>
+      </div>
+      <div class="testi-card">
+        <div class="stars">&#9733;&#9733;&#9733;&#9733;<span class="off">&#9733;</span></div>
+        <p class="quote">Finally a way to recycle that actually gives back. The coupons paid for my weekly groceries.</p>
+        <div class="who"><div class="av"></div><div><div class="nm">Albert Flores</div><div class="role">15 Mar 2025</div></div></div>
+      </div>
+      <div class="testi-card">
+        <div class="stars">&#9733;&#9733;&#9733;&#9733;<span class="off">&#9733;</span></div>
+        <p class="quote">My kids love competing on the leaderboard. It turned recycling into a fun family activity.</p>
+        <div class="who"><div class="av"></div><div><div class="nm">Albert Flores</div><div class="role">15 Mar 2025</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BLOG -->
+<section class="blog" id="blog">
+  <div class="container">
+    <div class="section-head center">
+      <span class="label">Blog</span>
+      <h2 class="section-title">Explore the latest news</h2>
+    </div>
+    <div class="blog-grid">
+      <div class="blog-card"><div class="pic">&#127881;</div><div class="body"><h5>Plstka The Winner 1st Place Techne Competition</h5><div class="date">16 Mar 2026</div></div></div>
+      <div class="blog-card"><div class="pic">&#128188;</div><div class="body"><h5>Plstka one of Alfanar Social Impact VC Portfolios</h5><div class="date">16 Mar 2026</div></div></div>
+      <div class="blog-card"><div class="pic">&#127942;</div><div class="body"><h5>Plstka X YWF</h5><div class="date">15 Mar 2026</div></div></div>
+      <div class="blog-card"><div class="pic">&#129309;</div><div class="body"><h5>Plstka X Alex Angles</h5><div class="date">15 Mar 2026</div></div></div>
+    </div>
+    <a href="#blog" class="btn btn-yellow">See more</a>
+  </div>
+</section>
+
+<!-- FAQ + NEWSLETTER -->
+<section class="nf" id="faq">
+  <div class="container">
+    <div class="left">
+      <span class="label">FAQs</span>
+      <h2 class="section-title">Your questions answered</h2>
+      <p>Here are some of the most common questions to help you get started with plstka.</p>
+    </div>
+    <div class="faq">
+      <details open><summary>How does Plstka work?</summary><div class="ans">You collect and submit recyclable waste through the app. Plstka contacts you with the right collection and recycling options, all while rewarding you for your contribution.</div></details>
+      <details><summary>How do I earn rewards?</summary><div class="ans">Request a pickup, and you earn points based on the type and weight of the recyclables we collect &mdash; redeem them for partner coupons.</div></details>
+      <details><summary>What kind of waste can I recycle?</summary><div class="ans">Plastic, aluminum and electronic waste &mdash; from bottles and cans to old phones and electronics.</div></details>
+      <details><summary>Is Plstka available in my city?</summary><div class="ans">We currently serve Tanta, El-Mahalla El-Kubra, Mansoura and Shebin El-Kom, with more cities coming soon.</div></details>
+      <details><summary>Is the service free to use?</summary><div class="ans">Yes &mdash; scheduling a pickup is completely free. You only gain rewards.</div></details>
+      <details><summary>Can businesses partner with Plstka?</summary><div class="ans">Absolutely. Our B2B platform helps companies manage waste and meet ESG goals &mdash; reach out to our team.</div></details>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BANNER -->
+<section class="cta-sec" id="cta">
+  <div class="container">
+    <div class="cta-banner">
+      <h2>Ready to Turn Your Trash Into Treasure?</h2>
+      <p>Download Plstka today and join thousands making the planet cleaner while earning real rewards.</p>
+      <a href="#" class="btn btn-white">Download app</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="contact">
+  <div class="container foot-inner">
+    <div class="foot-top">
+      <div class="foot-brand">
+        <a href="#home" class="logo">
+          <span class="logo-mark"><svg viewBox="0 0 32 32" fill="#fff"><rect x="6" y="10" width="20" height="3.4" rx="1.7"/><rect x="6" y="15.3" width="15" height="3.4" rx="1.7"/><rect x="6" y="20.6" width="10" height="3.4" rx="1.7"/></svg></span>
+          <span class="logo-text">plstka</span>
+        </a>
+        <p class="tag">Turning everyday waste into rewards &mdash; building a cleaner, greener future for the Middle East, one pickup at a time.</p>
+        <div class="app-badges">
+          <a href="#" class="app-badge" aria-label="Download on the App Store">
+            <svg viewBox="0 0 24 24" fill="#fff"><path d="M17.05 12.04c-.03-2.6 2.13-3.85 2.22-3.91-1.21-1.77-3.09-2.01-3.76-2.04-1.6-.16-3.12.94-3.93.94-.81 0-2.06-.92-3.39-.9-1.74.03-3.35 1.01-4.25 2.57-1.81 3.14-.46 7.79 1.3 10.34.86 1.25 1.88 2.65 3.22 2.6 1.29-.05 1.78-.83 3.34-.83 1.56 0 2 .83 3.37.81 1.39-.03 2.27-1.27 3.12-2.53.98-1.45 1.39-2.85 1.41-2.92-.03-.01-2.71-1.04-2.74-4.13zM14.62 4.6c.71-.86 1.19-2.06 1.06-3.25-1.02.04-2.26.68-2.99 1.54-.66.76-1.23 1.98-1.08 3.15 1.14.09 2.3-.58 3.01-1.44z"/></svg>
+            <span class="ab-t"><small>Download on the</small><b>App Store</b></span>
+          </a>
+          <a href="#" class="app-badge" aria-label="Get it on Google Play">
+            <svg viewBox="0 0 24 24" fill="#fff"><path d="M3.5 2.1c-.3.2-.5.5-.5.9v18c0 .4.2.7.5.9l10.3-9.9L3.5 2.1zM15.2 13.3l2.6 2.5 3.3-1.9c.6-.4.6-1.3 0-1.7l-3.3-1.9-2.6 3zM14 12l-9.7 9.3c.3.1.6.1.9-.1l11.3-6.5L14 12zM5.2 2.8c-.3-.2-.6-.2-.9-.1L14 12l2.5-2.4L5.2 2.8z"/></svg>
+            <span class="ab-t"><small>Get it on</small><b>Google Play</b></span>
+          </a>
+        </div>
+        <div class="socials">
+          <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 21v-8h2.7l.4-3.1h-3.1V7.9c0-.9.25-1.5 1.55-1.5H17V3.6c-.3 0-1.3-.1-2.45-.1-2.42 0-4.05 1.47-4.05 4.18V9.9H7.8V13h2.7v8h3z"/></svg></a>
+          <a href="#" aria-label="X"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 3h3l-6.6 7.5L21.8 21h-6l-4.7-6-5.4 6H2.7l7.1-8L2.5 3h6.1l4.2 5.6L17.5 3zm-1 16h1.6L7.6 4.7H5.9L16.5 19z"/></svg></a>
+          <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.94 8.5V21H3.5V8.5h3.44zM5.22 3.5a2 2 0 110 4 2 2 0 010-4zM21 21h-3.43v-6.6c0-1.57-.56-2.64-1.97-2.64-1.07 0-1.71.72-1.99 1.42-.1.25-.13.6-.13.95V21H10s.05-11.34 0-12.5h3.44v1.77c.46-.71 1.28-1.72 3.11-1.72 2.27 0 3.97 1.48 3.97 4.67V21z"/></svg></a>
+          <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+        </div>
+      </div>
+
+      <div class="foot-links">
+        <div class="foot-col">
+          <h5>Product</h5>
+          <a href="#recycle">What we recycle</a>
+          <a href="#how">How it works</a>
+          <a href="#rewards">Rewards</a>
+          <a href="plstka-business.html">For Business</a>
+        </div>
+        <div class="foot-col">
+          <h5>Company</h5>
+          <a href="#about">About us</a>
+          <a href="#blog">Blog</a>
+          <a href="#partners">Partners</a>
+          <a href="#">Careers</a>
+        </div>
+        <div class="foot-col">
+          <h5>Support</h5>
+          <a href="#contact">Contact us</a>
+          <a href="#faq">FAQs</a>
+          <a href="#">Help center</a>
+          <a href="#impact">Our impact</a>
+        </div>
+      </div>
+
+      <div class="foot-news">
+        <h5>Stay in the loop</h5>
+        <p>Get updates on new cities, rewards and recycling tips.</p>
+        <form class="foot-form" onsubmit="return false;">
+          <input type="email" placeholder="Email address" aria-label="Email address" />
+          <button type="submit" aria-label="Subscribe"><svg viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+        </form>
+        <div class="foot-mini">&#128205; Tanta, Gharbia, Egypt<br>&#9993; hello@plstka.com &middot; &#128222; +20 100 000 0000</div>
+      </div>
+    </div>
+
+    <div class="foot-divider"></div>
+
+    <div class="foot-bottom">
+      <span>&copy; 2026 Plstka. All rights reserved.</span>
+      <div class="foot-legal">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Use</a>
+        <a href="#">Cookies</a>
+      </div>
+    </div>
+
+    <div class="foot-watermark" aria-hidden="true">plstka</div>
+  </div>
+</footer>
+
+<!-- CHAT FAB -->
+<div class="chat-fab" aria-label="Chat with us">&#128172;</div>
+
+<script>
+  document.getElementById('navToggle').addEventListener('click', function () { document.body.classList.toggle('menu-open'); });
+  document.querySelectorAll('.nav-links a').forEach(function (a) { a.addEventListener('click', function () { document.body.classList.remove('menu-open'); }); });
+
+  const navEl = document.querySelector('.navbar');
+  window.addEventListener('scroll', function () {
+    if (navEl) navEl.classList.toggle('scrolled', window.pageYOffset > 24);
+  }, { passive: true });
+
+  const navSections = document.querySelectorAll('section[id]');
+  const navMap = {};
+  document.querySelectorAll('.nav-links a').forEach(a => navMap[a.getAttribute('href').slice(1)] = a);
+  const navObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting && navMap[e.target.id]) {
+        document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+        navMap[e.target.id].classList.add('active');
+      }
+    });
+  }, { rootMargin: '-45% 0px -50% 0px' });
+  navSections.forEach(s => navObs.observe(s));
+
+  // Language switcher (EN / AR + RTL)
+  (function () {
+    const root = document.documentElement;
+    const btn = document.getElementById('langSwitch');
+    const label = document.getElementById('langLabel');
+    if (!btn) return;
+    const nodes = document.querySelectorAll('[data-en][data-ar]');
+    function apply(lang) {
+      const ar = lang === 'ar';
+      root.lang = lang;
+      root.dir = ar ? 'rtl' : 'ltr';
+      nodes.forEach(n => { n.textContent = ar ? n.dataset.ar : n.dataset.en; });
+      if (label) label.textContent = ar ? 'AR' : 'EN';
+      try { localStorage.setItem('plstka-lang', lang); } catch (e) {}
+    }
+    let saved = 'en';
+    try { saved = localStorage.getItem('plstka-lang') || 'en'; } catch (e) {}
+    apply(saved);
+    btn.addEventListener('click', () => apply(root.lang === 'ar' ? 'en' : 'ar'));
+  })();
+</script>
+
+<!-- Scroll animation engine -->
+<script>
+(function () {
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const sp = document.getElementById('sp');
+  function onScroll() {
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+    if (sp) sp.style.width = (max > 0 ? (window.pageYOffset / max) * 100 : 0) + '%';
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  const logos = document.querySelector('.partners .logos');
+  if (logos && !reduce) {
+    const html = Array.from(logos.children).map(n => n.outerHTML).join('');
+    logos.classList.add('marquee-track');
+    logos.innerHTML = html + html;
+    logos.parentElement.classList.add('marquee');
+  }
+
+  if (reduce) return;
+
+  const groups = [
+    ['.hero-copy > *', 120, ''],
+    ['.partners .ptitle', 0, ''],
+    ['.about > .container > div:first-child > *', 90, 'r-left'],
+    ['.about-media', 0, 'r-right'],
+    ['.recycle .section-head', 0, ''],
+    ['.bubble', 70, 'r-scale'],
+    ['.recycle > .container > .btn', 0, ''],
+    ['.how .section-head', 0, ''],
+    ['.step', 120, ''],
+    ['.rewards .section-head', 0, ''],
+    ['.reward-card', 110, ''],
+    ['.impact .section-head', 0, 'r-left'],
+    ['.stat', 130, ''],
+    ['.testi .section-head', 0, ''],
+    ['.testi-card', 120, ''],
+    ['.blog .section-head', 0, ''],
+    ['.blog-card', 110, ''],
+    ['.nf .left > *', 90, 'r-left'],
+    ['.faq details', 90, 'r-right'],
+    ['.cta-banner > *', 100, ''],
+    ['.foot-brand > *', 90, 'r-left'],
+    ['.foot-col', 130, '']
+  ];
+  groups.forEach(([sel, stagger, variant]) => {
+    document.querySelectorAll(sel).forEach((el, i) => {
+      el.classList.add('reveal');
+      if (variant) el.classList.add(variant);
+      if (stagger) el.style.transitionDelay = (i % 6) * stagger + 'ms';
+    });
+  });
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  const fmt = n => n.toLocaleString('en-US');
+  function countUp(el) {
+    const raw = el.dataset.count;
+    const m = raw.match(/([\d,]+)/);
+    if (!m) return;
+    const target = parseInt(m[1].replace(/,/g, ''), 10);
+    const pre = raw.slice(0, m.index);
+    const post = raw.slice(m.index + m[1].length);
+    const dur = 1700, start = performance.now();
+    let done = false;
+    const finish = () => { if (!done) { done = true; el.textContent = pre + fmt(target) + post; } };
+    (function step(t) {
+      if (done) return;
+      const k = Math.min((t - start) / dur, 1);
+      const eased = 1 - Math.pow(1 - k, 3);
+      el.textContent = pre + fmt(Math.round(target * eased)) + post;
+      if (k < 1) requestAnimationFrame(step); else finish();
+    })(start);
+    setTimeout(finish, dur + 400);
+  }
+  document.querySelectorAll('.stat .big').forEach(el => { el.dataset.count = el.textContent.trim(); });
+  const statIO = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { countUp(e.target); statIO.unobserve(e.target); } });
+  }, { threshold: 0.6 });
+  document.querySelectorAll('.stat .big').forEach(el => statIO.observe(el));
+
+  const hero = document.querySelector('.hero');
+  window.addEventListener('scroll', () => {
+    const y = window.pageYOffset;
+    if (hero && y < window.innerHeight) hero.style.setProperty('--py', (y * 0.18) + 'px');
+  }, { passive: true });
+})();
+</script>
+<script src="assets/chat.js"></script>
+</body>
+</html>

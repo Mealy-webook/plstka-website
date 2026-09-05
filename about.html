@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>About — Plstka</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Manrope:wght@700;800&family=Roboto:wght@400;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/site.css" />
+<style>
+  .mission { padding: 96px 0; }
+  .mission-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+  .mission-grid p { color: var(--muted); line-height: 1.8; margin-bottom: 18px; }
+  .mv { display: grid; gap: 18px; }
+  .mv-card { padding: 28px; border-radius: 20px; border: 1px solid var(--hairline); box-shadow: var(--shadow-sm); }
+  .mv-card h4 { font-size: var(--fs-h4); color: var(--green-dark); margin: 14px 0 8px; }
+  .mv-card p { font-size: var(--fs-body-sm); color: var(--muted); line-height: 1.7; }
+
+  .stats-sec { padding: 0 0 96px; }
+
+  .timeline { padding: 96px 0; background: var(--bg-soft); }
+  .tl { max-width: 860px; margin: 52px auto 0; position: relative; }
+  .tl::before { content:""; position: absolute; left: 27px; top: 8px; bottom: 8px; width: 2px; background: repeating-linear-gradient(180deg, rgba(0,174,99,.4) 0 8px, transparent 8px 16px); }
+  .tl-item { display: grid; grid-template-columns: 56px 1fr; gap: 24px; padding-bottom: 34px; position: relative; }
+  .tl-item:last-child { padding-bottom: 0; }
+  .tl-dot { width: 56px; height: 56px; border-radius: 50%; background: #fff; border: 2px solid var(--green); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 13px; color: var(--green-dark); box-shadow: 0 8px 20px rgba(0,174,99,.16); position: relative; z-index: 1; }
+  .tl-body h4 { font-size: var(--fs-h4); color: var(--green-dark); margin-bottom: 6px; }
+  .tl-body p { font-size: var(--fs-body-sm); color: var(--muted); line-height: 1.7; }
+
+  .values { padding: 96px 0; }
+  .val-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; margin-top: 48px; }
+  .val { padding: 32px; }
+  .val h4 { font-size: var(--fs-h4); color: var(--green-dark); margin: 18px 0 8px; }
+  .val p { font-size: var(--fs-body-sm); color: var(--muted); line-height: 1.7; }
+
+  .team { padding: 96px 0; background: var(--bg-soft); }
+  .team-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 24px; margin-top: 48px; }
+  .member { text-align: center; }
+  .member .ph { aspect-ratio: 1; border-radius: 20px; background: linear-gradient(135deg,#bfe9d6,#7fd1ad); display: flex; align-items: center; justify-content: center; font-size: 46px; margin-bottom: 16px; transition: transform .35s cubic-bezier(.16,1,.3,1); }
+  .member:hover .ph { transform: translateY(-6px); }
+  .member b { display: block; font-size: 16px; color: var(--green-dark); }
+  .member span { font-size: 13.5px; color: var(--muted); }
+
+  .backers { padding: 96px 0; text-align: center; }
+  .backers .logos { display: flex; flex-wrap: wrap; justify-content: center; gap: 22px 52px; margin-top: 40px; }
+  .backers .logos span { font-weight: 700; font-size: 21px; color: #9aa0a6; filter: grayscale(1); opacity: .7; transition: filter .3s, opacity .3s, transform .3s; }
+  .backers .logos span:hover { filter: none; opacity: 1; transform: scale(1.06); }
+
+  @media (max-width: 1100px) { .mission-grid { grid-template-columns: 1fr; gap: 40px; } .val-grid { grid-template-columns: repeat(2,1fr); } .team-grid { grid-template-columns: repeat(2,1fr); } }
+  @media (max-width: 780px) { .mission, .timeline, .values, .team, .backers { padding: 64px 0; } .val-grid, .team-grid { grid-template-columns: 1fr; } .tl-item { grid-template-columns: 44px 1fr; gap: 16px; } .tl::before { left: 21px; } .tl-dot { width: 44px; height: 44px; font-size: 12px; } }
+</style>
+</head>
+<body>
+<div class="scroll-progress" id="sp"></div>
+
+<div class="navbar-wrap">
+  <nav class="navbar">
+    <a href="index.html" class="logo">
+      <span class="logo-mark"><svg viewBox="0 0 32 32" fill="#fff"><rect x="6" y="10" width="20" height="3.4" rx="1.7"/><rect x="6" y="15.3" width="15" height="3.4" rx="1.7"/><rect x="6" y="20.6" width="10" height="3.4" rx="1.7"/></svg></span>
+      <span class="logo-text">plstka</span>
+    </a>
+    <div class="nav-links">
+      <a href="index.html" data-en="Home" data-ar="الرئيسية">Home</a>
+      <a href="about.html" class="active" data-en="About" data-ar="من نحن">About</a>
+      <a href="products.html" data-en="Products" data-ar="المنتجات">Products</a>
+      <a href="blog.html" data-en="Blog" data-ar="المدونة">Blog</a>
+      <a href="partners.html" data-en="Partners" data-ar="الشركاء">Partners</a>
+      <a href="careers.html" data-en="Careers" data-ar="الوظائف">Careers</a>
+      <a href="contact.html" data-en="Contact us" data-ar="تواصل معنا">Contact us</a>
+    </div>
+    <div class="nav-actions">
+      <button class="lang-switch" id="langSwitch" aria-label="Switch language">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#053C33" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M3 12h18" stroke-linecap="round"/><path d="M12 3c2.6 2.6 2.6 15.4 0 18M12 3c-2.6 2.6-2.6 15.4 0 18" stroke-linecap="round"/></svg>
+        <span id="langLabel">EN</span>
+      </button>
+      <a href="plstka-business.html" class="btn btn-outline" data-en="For Business" data-ar="للشركات">For Business</a>
+      <a href="index.html#cta" class="btn btn-yellow" style="padding:12px 24px;" data-en="Download app" data-ar="حمّل التطبيق">Download app</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+    </div>
+  </nav>
+</div>
+
+<!-- HERO -->
+<section class="page-hero">
+  <div class="grid-bg"></div>
+  <div class="container">
+    <span class="crumb"><a href="index.html">Home</a> &rsaquo; About</span>
+    <h1>We're building the <em>future of recycling</em></h1>
+    <p>Plstka started with a simple question: why do people pay to throw away things that still have value? Today we're an AI-powered recycling platform serving tens of thousands of households and businesses.</p>
+  </div>
+</section>
+
+<!-- MISSION -->
+<section class="mission">
+  <div class="container mission-grid">
+    <div class="reveal r-left">
+      <span class="label">Our story</span>
+      <h2 class="section-title">From one city in the Delta to a regional platform</h2>
+      <p>We launched in 2021 in Egypt's Delta region, where recycling was informal, fragmented and invisible. Waste had value, but almost none of it reached the people who generated it.</p>
+      <p>So we built two things at once: a consumer app that rewards households for recycling, and a business platform that gives companies real data on the waste they produce. Both feed the same network of vetted recyclers.</p>
+      <p>Today Plstka operates across four cities, has recycled over 1,500 tons of material, and is expanding across the Middle East &mdash; backed by a $1M round to accelerate the rollout.</p>
+    </div>
+    <div class="mv reveal r-right">
+      <div class="mv-card">
+        <span class="icon-badge">&#127919;</span>
+        <h4>Our mission</h4>
+        <p>Make recycling the easiest and most rewarding choice for every household and business in the region &mdash; and make its impact measurable.</p>
+      </div>
+      <div class="mv-card">
+        <span class="icon-badge">&#128302;</span>
+        <h4>Our vision</h4>
+        <p>A circular economy where no recyclable material reaches landfill, and where the people who sort waste share in the value they create.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="stats-sec">
+  <div class="container">
+    <div class="stats-band" data-reveal="110">
+      <div class="stat-item"><b data-count>60,000+</b><span>Active users</span></div>
+      <div class="stat-item"><b data-count>1,500+</b><span>Tons recycled</span></div>
+      <div class="stat-item"><b data-count>4</b><span>Cities served</span></div>
+      <div class="stat-item"><b data-count>840</b><span>Tons CO₂ avoided</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- TIMELINE -->
+<section class="timeline">
+  <div class="container">
+    <div class="section-head center">
+      <span class="label reveal">Milestones</span>
+      <h2 class="section-title reveal">How we got here</h2>
+    </div>
+    <div class="tl">
+      <div class="tl-item reveal"><div class="tl-dot">2021</div><div class="tl-body"><h4>Plstka is founded</h4><p>Launched in Tanta with a small pilot: door-to-door collection for a few hundred households, coordinated over WhatsApp.</p></div></div>
+      <div class="tl-item reveal"><div class="tl-dot">2022</div><div class="tl-body"><h4>The app goes live</h4><p>We replaced the spreadsheets with a real product &mdash; scheduling, points and a rewards catalogue &mdash; and crossed our first 10,000 users.</p></div></div>
+      <div class="tl-item reveal"><div class="tl-dot">2023</div><div class="tl-body"><h4>Expansion across the Delta</h4><p>El-Mahalla, Mansoura and Shebin El-Kom came online, and we opened our first sorting facility.</p></div></div>
+      <div class="tl-item reveal"><div class="tl-dot">2024</div><div class="tl-body"><h4>Plstka for Business</h4><p>Factories and retailers asked for the same data households were getting. The B2B platform launched with IoT-tracked collection.</p></div></div>
+      <div class="tl-item reveal"><div class="tl-dot">2025</div><div class="tl-body"><h4>$1M raised</h4><p>We closed a seed round to expand into six more cities and invest in AI-driven route optimisation.</p></div></div>
+      <div class="tl-item reveal"><div class="tl-dot">2026</div><div class="tl-body"><h4>Going regional</h4><p>60,000+ users, 1,500+ tons recycled, and the first steps beyond Egypt.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- VALUES -->
+<section class="values">
+  <div class="container">
+    <div class="section-head center">
+      <span class="label reveal">What we believe</span>
+      <h2 class="section-title reveal">The principles behind the product</h2>
+    </div>
+    <div class="val-grid" data-reveal="110">
+      <div class="card val"><span class="icon-badge">&#9878;&#65039;</span><h4>Value belongs to people</h4><p>The person who sorts the waste should share in what it's worth. Rewards aren't a marketing gimmick &mdash; they're the point.</p></div>
+      <div class="card val"><span class="icon-badge">&#128200;</span><h4>Measure everything</h4><p>Sustainability claims without data are just marketing. Every kilogram we handle is weighed, logged and traceable.</p></div>
+      <div class="card val"><span class="icon-badge">&#129309;</span><h4>Build with communities</h4><p>We hire locally, work with informal collectors instead of around them, and design for the streets we actually operate on.</p></div>
+      <div class="card val"><span class="icon-badge">&#9889;</span><h4>Make it effortless</h4><p>If recycling takes more than a few taps, people won't do it. Convenience is an environmental strategy.</p></div>
+      <div class="card val"><span class="icon-badge">&#128274;</span><h4>Earn trust</h4><p>Clear pricing, honest reporting, and no inflated impact numbers. Our credibility is the business.</p></div>
+      <div class="card val"><span class="icon-badge">&#127793;</span><h4>Long game</h4><p>We optimise for a circular system that still works in twenty years, not for a quarter's headline.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section class="team">
+  <div class="container">
+    <div class="section-head center">
+      <span class="label reveal">Our team</span>
+      <h2 class="section-title reveal">The people behind Plstka</h2>
+      <p class="sub reveal">A team of engineers, operators and environmental scientists based in Egypt.</p>
+    </div>
+    <div class="team-grid" data-reveal="100">
+      <div class="member"><div class="ph">&#128104;&#8205;&#128188;</div><b>Founder &amp; CEO</b><span>Strategy &amp; partnerships</span></div>
+      <div class="member"><div class="ph">&#128105;&#8205;&#128187;</div><b>CTO</b><span>Platform &amp; AI</span></div>
+      <div class="member"><div class="ph">&#128104;&#8205;&#127981;</div><b>Head of Operations</b><span>Collection &amp; logistics</span></div>
+      <div class="member"><div class="ph">&#128105;&#8205;&#128300;</div><b>Head of Sustainability</b><span>ESG &amp; reporting</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- BACKERS -->
+<section class="backers">
+  <div class="container">
+    <div class="section-head center">
+      <span class="label reveal">Backed by</span>
+      <h2 class="section-title reveal">Supported by programs that build for impact</h2>
+    </div>
+    <div class="marquee"><div class="logos marquee-track">
+      <span>nilepreneurs</span><span>icealex</span><span>Google for Startups</span><span>Microsoft</span><span>Flat6Labs</span><span>tiec</span>
+    </div></div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-band">
+  <div class="container">
+    <div class="cta-inner">
+      <h2>Want to be part of the story?</h2>
+      <p>Whether you recycle at home, run a factory, or want to join the team &mdash; there's a way in.</p>
+      <div style="display:flex;gap:14px;flex-wrap:wrap;position:relative;z-index:1;">
+        <a href="careers.html" class="btn btn-dark">See open roles</a>
+        <a href="contact.html" class="btn btn-white">Get in touch</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="container foot-inner">
+    <div class="foot-top">
+      <div class="foot-brand">
+        <a href="index.html" class="logo">
+          <span class="logo-mark"><svg viewBox="0 0 32 32" fill="#fff"><rect x="6" y="10" width="20" height="3.4" rx="1.7"/><rect x="6" y="15.3" width="15" height="3.4" rx="1.7"/><rect x="6" y="20.6" width="10" height="3.4" rx="1.7"/></svg></span>
+          <span class="logo-text">plstka</span>
+        </a>
+        <p class="tag">Turning everyday waste into rewards &mdash; building a cleaner, greener future for the Middle East, one pickup at a time.</p>
+        <div class="app-badges">
+          <a href="#" class="app-badge"><svg viewBox="0 0 24 24" fill="#fff"><path d="M17.05 12.04c-.03-2.6 2.13-3.85 2.22-3.91-1.21-1.77-3.09-2.01-3.76-2.04-1.6-.16-3.12.94-3.93.94-.81 0-2.06-.92-3.39-.9-1.74.03-3.35 1.01-4.25 2.57-1.81 3.14-.46 7.79 1.3 10.34.86 1.25 1.88 2.65 3.22 2.6 1.29-.05 1.78-.83 3.34-.83 1.56 0 2 .83 3.37.81 1.39-.03 2.27-1.27 3.12-2.53.98-1.45 1.39-2.85 1.41-2.92-.03-.01-2.71-1.04-2.74-4.13zM14.62 4.6c.71-.86 1.19-2.06 1.06-3.25-1.02.04-2.26.68-2.99 1.54-.66.76-1.23 1.98-1.08 3.15 1.14.09 2.3-.58 3.01-1.44z"/></svg><span class="ab-t"><small>Download on the</small><b>App Store</b></span></a>
+          <a href="#" class="app-badge"><svg viewBox="0 0 24 24" fill="#fff"><path d="M3.5 2.1c-.3.2-.5.5-.5.9v18c0 .4.2.7.5.9l10.3-9.9L3.5 2.1zM15.2 13.3l2.6 2.5 3.3-1.9c.6-.4.6-1.3 0-1.7l-3.3-1.9-2.6 3zM14 12l-9.7 9.3c.3.1.6.1.9-.1l11.3-6.5L14 12zM5.2 2.8c-.3-.2-.6-.2-.9-.1L14 12l2.5-2.4L5.2 2.8z"/></svg><span class="ab-t"><small>Get it on</small><b>Google Play</b></span></a>
+        </div>
+        <div class="socials">
+          <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 21v-8h2.7l.4-3.1h-3.1V7.9c0-.9.25-1.5 1.55-1.5H17V3.6c-.3 0-1.3-.1-2.45-.1-2.42 0-4.05 1.47-4.05 4.18V9.9H7.8V13h2.7v8h3z"/></svg></a>
+          <a href="#" aria-label="X"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 3h3l-6.6 7.5L21.8 21h-6l-4.7-6-5.4 6H2.7l7.1-8L2.5 3h6.1l4.2 5.6L17.5 3zm-1 16h1.6L7.6 4.7H5.9L16.5 19z"/></svg></a>
+          <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.94 8.5V21H3.5V8.5h3.44zM5.22 3.5a2 2 0 110 4 2 2 0 010-4zM21 21h-3.43v-6.6c0-1.57-.56-2.64-1.97-2.64-1.07 0-1.71.72-1.99 1.42-.1.25-.13.6-.13.95V21H10s.05-11.34 0-12.5h3.44v1.77c.46-.71 1.28-1.72 3.11-1.72 2.27 0 3.97 1.48 3.97 4.67V21z"/></svg></a>
+          <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+        </div>
+      </div>
+      <div class="foot-links">
+        <div class="foot-col"><h5>Product</h5><a href="products.html">What we recycle</a><a href="products.html#how">How it works</a><a href="products.html#rewards">Rewards</a><a href="plstka-business.html">For Business</a></div>
+        <div class="foot-col"><h5>Company</h5><a href="about.html">About us</a><a href="blog.html">Blog</a><a href="partners.html">Partners</a><a href="careers.html">Careers</a></div>
+        <div class="foot-col"><h5>Support</h5><a href="contact.html">Contact us</a><a href="index.html#faq">FAQs</a><a href="#">Help center</a><a href="index.html#impact">Our impact</a></div>
+      </div>
+      <div class="foot-news">
+        <h5>Stay in the loop</h5>
+        <p>Get updates on new cities, rewards and recycling tips.</p>
+        <form class="foot-form" onsubmit="return false;">
+          <input type="email" placeholder="Email address" aria-label="Email address" />
+          <button type="submit" aria-label="Subscribe"><svg viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+        </form>
+        <div class="foot-mini">&#128205; Tanta, Gharbia, Egypt<br>&#9993; hello@plstka.com &middot; &#128222; +20 100 000 0000</div>
+      </div>
+    </div>
+    <div class="foot-divider"></div>
+    <div class="foot-bottom">
+      <span>&copy; 2026 Plstka. All rights reserved.</span>
+      <div class="foot-legal"><a href="#">Privacy Policy</a><a href="#">Terms of Use</a><a href="#">Cookies</a></div>
+    </div>
+    <div class="foot-watermark" aria-hidden="true">plstka</div>
+  </div>
+</footer>
+
+<script src="assets/site.js"></script>
+<script src="assets/chat.js"></script>
+</body>
+</html>
