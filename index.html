@@ -282,7 +282,7 @@
   .h-intro { max-width: 620px; display: flex; flex-direction: column; gap: 22px; margin-bottom: 26px; }
   .h-intro .eyebrow { color: var(--green-label); }
   .cpanel { position: relative; border-radius: 30px; overflow: hidden; height: 72vw; max-height: 520px; color: #fff; isolation: isolate; }
-  .cpanel img { position: absolute; top: 0; left: -8%; width: 116%; height: 100%; object-fit: cover; z-index: -2; }
+  .cpanel img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; z-index: -2; transform: scale(1.2); }   /* scaled so the parallax never shows an edge */
   .cpanel::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(to top, rgba(5,60,51,.85), transparent 58%); }
   .cp-idx { position: absolute; top: 22px; left: 24px; font-family: 'Manrope', sans-serif; font-weight: 800; font-size: 14px; padding: 8px 14px; border-radius: 999px; background: rgba(255,255,255,.2); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
   .cpanel h3 { position: absolute; left: 26px; right: 26px; bottom: 20px; font-size: clamp(36px, 5.6vw, 104px); font-weight: 800; text-transform: uppercase; letter-spacing: -.055em; line-height: .88; }
@@ -1117,7 +1117,7 @@
       const hsTween = gsap.to(track, { x: () => -dist(), ease: 'none',
         scrollTrigger: { trigger: sec, start: 'top top', end: () => '+=' + dist(), pin: true, scrub: .8, invalidateOnRefresh: true } });
       $$('.cpanel', track).forEach(p => {
-        gsap.fromTo($('img', p), { xPercent: -7 }, { xPercent: 7, ease: 'none',
+        gsap.fromTo($('img', p), { xPercent: -6, scale: 1.2 }, { xPercent: 6, scale: 1.2, ease: 'none',
           scrollTrigger: { trigger: p, containerAnimation: hsTween, start: 'left right', end: 'right left', scrub: true } });
         gsap.from($('h3', p), { yPercent: 70, opacity: 0, duration: 1.2, ease: 'expo.out',
           scrollTrigger: { trigger: p, containerAnimation: hsTween, start: 'left 75%', toggleActions: 'play none none reverse' } });
