@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Manrope:wght@700;800&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="assets/aw/b.css?v=10" />
+<link rel="stylesheet" href="assets/aw/b.css?v=11" />
 <style>
   /* ================= HERO ================= */
   .ah { position: relative; min-height: 100svh; display: grid; grid-template-columns: 1.25fr .75fr; gap: 4vw; padding: 130px var(--pad) 40px; overflow: hidden; isolation: isolate; }
@@ -17,7 +17,7 @@
   .crumb a:hover { color: var(--yellow); }
   .ah h1 { margin: auto 0 5vh; font-size: clamp(54px, 9.4vw, 176px); }
   .ah h1 .l2 { padding-left: 8vw; }
-  .ah h1 .outline { -webkit-text-stroke: 2px #fff; }
+  .ah h1 .outline { color: var(--yellow); -webkit-text-stroke: 0; }
   .ah-bottom { display: flex; justify-content: space-between; align-items: flex-end; gap: 32px; padding-top: 26px; border-top: 1px solid var(--line-light); }
   .ah-bottom p { max-width: 520px; color: rgba(255,255,255,.8); font-size: clamp(15px, 1.2vw, 18px); }
   .ah-bottom small { display: block; margin-top: 10px; color: var(--yellow); font-weight: 600; letter-spacing: .02em; }
@@ -35,7 +35,7 @@
   .chap-grid { display: grid; grid-template-columns: 1fr 3fr; gap: 40px; }
   .chap-side { position: relative; }
   .chap-side .sticky { position: sticky; top: 120px; display: flex; flex-direction: column; gap: 14px; }
-  .chap-no { font-family: 'Manrope', sans-serif; font-weight: 800; font-size: clamp(90px, 11vw, 200px); line-height: .8; letter-spacing: -.08em; color: transparent; -webkit-text-stroke: 1.5px currentColor; opacity: .35; }
+  .chap-no { font-family: 'Manrope', sans-serif; font-weight: 800; font-size: clamp(90px, 11vw, 200px); line-height: .8; letter-spacing: -.08em; color: currentColor; opacity: .35; }
   .paper .eyebrow { color: var(--green-label); }
   .dark .eyebrow, .green .eyebrow { color: var(--yellow); }
   .chap h2 { max-width: 15ch; margin-bottom: clamp(32px, 4vw, 64px); }
@@ -58,7 +58,7 @@
   .s-track { display: flex; flex-direction: column; gap: 20px; padding: clamp(96px, 10vw, 160px) var(--pad); }
   .s-intro { max-width: 560px; display: flex; flex-direction: column; gap: 22px; margin-bottom: 20px; }
   .scard { position: relative; border-radius: 30px; background: rgba(255,255,255,.05); border: 1px solid var(--line-light); padding: 30px; display: flex; flex-direction: column; gap: 12px; overflow: hidden; }
-  .scard .yr { font-family: 'Manrope', sans-serif; font-weight: 800; font-size: clamp(64px, 7.6vw, 132px); letter-spacing: -.07em; line-height: .82; color: transparent; -webkit-text-stroke: 1.5px var(--yellow); white-space: nowrap; }
+  .scard .yr { font-family: 'Manrope', sans-serif; font-weight: 800; font-size: clamp(64px, 7.6vw, 132px); letter-spacing: -.07em; line-height: .82; color: var(--yellow); white-space: nowrap; }
   .scard h4 { font-size: clamp(22px, 2.1vw, 34px); font-weight: 800; text-transform: uppercase; letter-spacing: -.04em; line-height: 1; }
   .scard p { color: rgba(255,255,255,.74); max-width: 420px; font-size: 15.5px; }
   .scard .pic { margin-top: auto; height: 220px; border-radius: 20px; overflow: hidden; background: var(--grad); display: grid; place-items: center; }
@@ -76,6 +76,15 @@
   .story.h-on .scard { width: min(440px, 30vw); height: 76vh; flex: none; }
   .story.h-on .scard:nth-child(odd) { transform: translateY(3vh); }
   .story.h-on .s-bar { display: block; }
+  .story { overflow: hidden; }
+  @media (max-width: 900px) {   /* phones: same pinned sideways timeline, cards sized for the screen */
+    .story.h-on .s-track { gap: 14px; height: 100svh; }
+    .story.h-on .s-intro { width: 84vw; margin: 0 6vw 0 0; }
+    .story.h-on .scard { width: 80vw; height: auto; max-height: 78svh; overflow: hidden; }
+    .story.h-on .scard:nth-child(odd) { transform: none; }
+    .story.h-on .scard .yr { font-size: 64px; }
+    .story.h-on .scard .pic { height: 140px; }
+  }
 
   /* ================= PROOF ================= */
   .proof { position: relative; min-height: 115vh; display: flex; align-items: flex-end; padding: 0 var(--pad) clamp(48px, 6vw, 90px); overflow: hidden; color: #fff; isolation: isolate; }
@@ -165,7 +174,7 @@
   .backers .eyebrow::before { display: none; }
   .backers h2 { text-align: center; margin: 0 auto clamp(36px, 4vw, 60px); max-width: 18ch; padding: 0 var(--pad); }
   .bk-mq { font-size: clamp(42px, 6.8vw, 120px); font-weight: 800; text-transform: uppercase; letter-spacing: -.05em; line-height: 1.05; }
-  .bk-mq .mq-item:nth-child(odd) .nm { color: transparent; -webkit-text-stroke: 1.5px rgba(255,255,255,.8); }
+  .bk-mq .mq-item:nth-child(odd) .nm { color: var(--yellow); }
   .logo-strip { display: flex; justify-content: center; align-items: center; gap: 22px; flex-wrap: wrap; margin: clamp(40px, 4vw, 64px) var(--pad) 0; }
   .logo-strip div { height: 96px; padding: 0 30px; border-radius: 20px; background: #fff; display: grid; place-items: center; }
   .logo-strip img { max-height: 54px; max-width: 220px; object-fit: contain; }
@@ -288,20 +297,9 @@
 </section>
 
 <!-- ================= CH 02 — THE IDEA ================= -->
-<section class="chap green">
-  <div class="chap-grid">
-    <div class="chap-side"><div class="sticky"><span class="chap-no">02</span><span class="eyebrow">The idea</span></div></div>
-    <div>
-      <h2 class="xl" data-split>Swap your waste for <span class="outline">real rewards</span></h2>
-      <p class="lead" data-fade style="max-width:640px;opacity:.9">In 2021 Ahmed ElNagar, Mahmoud Mazrou and Saaeda Mohmed launched an app that turns sorted household waste into discount coupons on everyday services &mdash; and made a game of it, with monthly prizes in the <b>Plstka Profitable Competition</b>.</p>
-    </div>
-  </div>
-</section>
-
-<!-- ================= CH 03 — FIRST BELIEVERS ================= -->
 <section class="chap dark">
   <div class="chap-grid">
-    <div class="chap-side"><div class="sticky"><span class="chap-no">03</span><span class="eyebrow">First believers</span></div></div>
+    <div class="chap-side"><div class="sticky"><span class="chap-no">02</span><span class="eyebrow">First believers</span></div></div>
     <div>
       <p class="muted" data-fade style="max-width:620px;margin-bottom:34px">In December 2021, a few months after launch, Plstka closed its first seed round from the <b style="color:#fff">Alexandria Angels Network</b>, with matching funds from <b style="color:#fff">Hivos</b>.</p>
       <blockquote class="quote-xl" data-highlight>The world is shifting to green energy and waste management, and Plstka is aiming for a blue ocean market in Egypt's Delta.</blockquote>
@@ -314,7 +312,7 @@
 <section class="story dark">
   <div class="s-track">
     <div class="s-intro">
-      <span class="eyebrow"><span class="n">04</span> The journey</span>
+      <span class="eyebrow"><span class="n">03</span> The journey</span>
       <h2 class="xl" data-split>From Tanta to <span class="outline">the Delta</span></h2>
       <p class="muted" data-fade>Pickup by pickup, the idea grew from one city into a network across four &mdash; with a business platform behind it.</p>
     </div>
@@ -333,7 +331,7 @@
   <div class="proof-bg" data-parallax="8"><img src="assets/about/techne-stage.jpg" alt="" loading="lazy" /></div>
   <div class="proof-in">
     <div>
-      <span class="eyebrow" style="color:var(--yellow)"><span class="n">05</span> The proof</span>
+      <span class="eyebrow" style="color:var(--yellow)"><span class="n">04</span> The proof</span>
       <h2 class="xl" data-split>Recycling people actually <span class="hl">show up for</span></h2>
       <p data-fade>Making recycling rewarding &mdash; and a little competitive &mdash; changed behaviour. Tens of thousands of households now use Plstka instead of the bin.</p>
     </div>
@@ -376,7 +374,7 @@
 <section class="team paper">
   <div class="team-grid">
     <div>
-      <span class="eyebrow"><span class="n">06</span> Our team</span>
+      <span class="eyebrow"><span class="n">05</span> Our team</span>
       <h2 class="xl" data-split>The people behind Plstka</h2>
       <p class="muted" data-fade>A team from the Delta, building for the streets they grew up on &mdash; engineers, operators and the handlers who knock on your door.</p>
       <div class="founders" data-stagger>
@@ -400,7 +398,7 @@
 <section class="chap green">
   <div class="next-grid">
     <div>
-      <span class="eyebrow"><span class="n">07</span> The next chapter</span>
+      <span class="eyebrow"><span class="n">06</span> The next chapter</span>
       <h2 class="xl" data-split>Six more cities <span class="outline">next</span></h2>
       <p data-fade style="opacity:.9;max-width:520px">A new round led by Empire Angles Bridge is the first step of a US$1 million plan to take Plstka beyond the four Delta cities.</p>
       <div class="cities" data-stagger>
@@ -432,7 +430,7 @@
 <!-- ================= PRESS ================= -->
 <section class="press white">
   <div class="sec-head">
-    <span class="eyebrow"><span class="n">08</span> In the press</span>
+    <span class="eyebrow"><span class="n">07</span> In the press</span>
     <h2 class="l" data-split>Read the story elsewhere</h2>
   </div>
   <div class="press-list" data-stagger>
@@ -492,7 +490,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
-<script src="assets/aw/b.js?v=5"></script>
+<script src="assets/aw/b.js?v=11"></script>
 <script>
 (function () {
   const { $, $$ } = PB;
@@ -519,7 +517,7 @@
     // 3D reward objects float in
 
     const mm = gsap.matchMedia();
-    mm.add('(min-width: 901px)', () => {
+    mm.add('(min-width: 0px)', () => {
       if (document.documentElement.dir === 'rtl') return;
       const sec = $('.story'), track = $('.s-track');
       sec.classList.add('h-on');

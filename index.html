@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Manrope:wght@700;800&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="assets/aw/b.css?v=10" />
+<link rel="stylesheet" href="assets/aw/b.css?v=11" />
 <style>
   /* ---- Original-site tokens (used by the sections kept from the current design) ---- */
   :root {
@@ -58,6 +58,7 @@
   .proof-text b { font-weight: 600; }
   .hero-visual { display: flex; justify-content: center; min-height: 560px; }   /* empty stage: the particle morph is centred here */
   @media (max-width: 1100px) { .hero-visual { min-height: 380px; } }
+  @media (max-width: 900px) { .hero-gl, .hero-visual { display: none; } }
 
   /* phone mockup */
 
@@ -67,13 +68,19 @@
   .partners .logos { display: flex; flex-wrap: wrap; gap: 24px 56px; align-items: center; justify-content: center; }
   .partners .logos span { font-weight: 700; font-size: 22px; color: #9aa0a6; filter: grayscale(1); opacity: .7; transition: filter .3s, opacity .3s, transform .3s; }
   .partners .logos span:hover { filter: grayscale(0); opacity: 1; transform: scale(1.06); }
+  .partners .logos span { display: block; flex: none; }
+  .partners .logos img { height: 96px; width: auto; display: block; mix-blend-mode: multiply; }
+  @media (max-width: 640px) { .partners .logos img { height: 72px; } }
 
   .hero-gl { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
   .hero .container { position: relative; }
 
   /* ================= RECYCLE (original) ================= */
   .recycle { padding: 96px 0; background: var(--bg-soft); text-align: center; }
-  .recycle .section-head { margin-bottom: 40px; align-items: center; }
+  .recycle .rc-head { text-align: left; margin-bottom: clamp(40px, 5vw, 72px); }
+  .recycle .rc-head .eyebrow { color: var(--green-label); }
+  .recycle .rc-head h2 { margin: 18px 0 20px; max-width: 16ch; }
+  .recycle .rc-head p { max-width: 560px; font-size: clamp(15px, 1.2vw, 18px); }
   .material-cluster { display: flex; flex-direction: column; align-items: center; }
   .cluster-row { display: flex; justify-content: center; }
   .cluster-row.offset { margin-top: -48px; }
@@ -108,7 +115,16 @@
     .marquee-track { display: flex !important; flex-wrap: nowrap !important; width: max-content; gap: 56px; align-items: center; animation: marquee 30s linear infinite; }
     .marquee:hover .marquee-track { animation-play-state: paused; }
   }
-  @media (max-width: 1100px) { .hero .container { grid-template-columns: 1fr; } }
+  @media (max-width: 1100px) {
+    .hero .container { grid-template-columns: 1fr; }
+    /* hero copy centred on tablet/phone */
+    .hero-copy { text-align: center; display: flex; flex-direction: column; align-items: center; }
+    .hero p.lead { margin-left: auto; margin-right: auto; }
+    .hero-cta, .hero-proof { justify-content: center; }
+    .hero-proof { flex-direction: column; gap: 12px; }
+    .hero-proof .proof-divider { display: none; }
+    .hero-proof .proof-info, .hero-proof .proof-stars { text-align: center; justify-content: center; }
+  }
   @media (max-width: 860px) { .partners, .recycle { padding: 64px 0; } }
   @media (max-width: 640px) {
     .hero { padding: 124px 0 56px; }
@@ -379,7 +395,14 @@
     .dcard p { font-size: 14.5px; }
     .dperks { margin-top: 12px; }
     .rewards.deck-on .rw-head h2 { font-size: clamp(30px, 9vw, 48px); }
-    .rewards.deck-on .dcard { top: 76px; height: calc(100% - 80px); }
+    .rewards.deck-on .rw-pin { height: 100svh; padding-top: 84px; padding-bottom: 16px; }
+    .rewards.deck-on .dcard { top: 64px; height: calc(100% - 68px); gap: 10px; padding: 18px; align-content: start; }
+    .rewards.deck-on .dvis { min-height: 0; height: clamp(90px, 18svh, 150px); border-radius: 18px; }
+    .rewards.deck-on .deck-emoji { font-size: clamp(48px, 11svh, 76px); }
+    .rewards.deck-on .dcard h3 { font-size: clamp(26px, 8vw, 36px); margin: 6px 0 8px; }
+    .rewards.deck-on .dcard p { font-size: 14px; line-height: 1.5; }
+    .rewards.deck-on .dperks { margin-top: 10px; gap: 6px; }
+    .rewards.deck-on .dperks span { padding: 5px 12px; font-size: 12.5px; }
   }
   @media (max-width: 700px) {
     .about-row { grid-template-columns: 1fr; }
@@ -485,12 +508,11 @@
   <div class="container">
     <p class="ptitle">featured by 100+ programs around the world</p>
     <div class="logos">
-      <span>nilepreneurs</span>
-      <span>icealex</span>
-      <span>Google for Startups</span>
-      <span>Microsoft</span>
-      <span>flickr</span>
-      <span>tiec</span>
+      <span><img src="assets/logos/nilepreneurs.png" alt="NilePreneurs" /></span>
+      <span><img src="assets/logos/icealex.png" alt="icealex" /></span>
+      <span><img src="assets/logos/google-for-startups.png" alt="Google for Startups" /></span>
+      <span><img src="assets/logos/microsoft.png" alt="Microsoft" /></span>
+      <span><img src="assets/logos/itida-tiec.png" alt="ITIDA | TIEC" /></span>
     </div>
   </div>
 </section>
@@ -513,10 +535,10 @@
 <!-- RECYCLE / MATERIALS -->
 <section class="recycle" id="recycle">
   <div class="container">
-    <div class="section-head center">
-      <span class="label">What we recycle</span>
-      <h2 class="section-title">Materials we turn into <span class="g">real value</span></h2>
-      <p class="sub">From plastics to electronics, we accept a wide range of recyclable materials and reward you for every kilogram.</p>
+    <div class="rc-head">
+      <span class="eyebrow"><span class="n">02</span> What we recycle</span>
+      <h2 class="xl" data-split>Materials we turn into <span class="hl">real value</span></h2>
+      <p class="muted" data-fade>From plastics to electronics, we accept a wide range of recyclable materials and reward you for every kilogram.</p>
     </div>
     <div class="material-cluster">
       <div class="cluster-row">
@@ -753,7 +775,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script src="assets/aw/b.js?v=5"></script>
+<script src="assets/aw/b.js?v=11"></script>
 <script>
 (function () {
   const { $, $$ } = PB;
@@ -765,6 +787,7 @@
   (function heroGL() {
     const cvs = $('#heroGL');
     if (!cvs || !window.THREE) return;
+    if (matchMedia('(max-width: 900px)').matches) return;   // no particle morph on phones
     let renderer;
     try { renderer = new THREE.WebGLRenderer({ canvas: cvs, alpha: true, antialias: false, powerPreference: 'high-performance' }); }
     catch (e) { return; }
@@ -1008,7 +1031,7 @@
     /* ---- Materials: original cluster, bubbles pop in ---- */
     gsap.from('.bubble-img', { scale: 0, duration: 1, ease: 'back.out(1.7)', stagger: { each: .06, from: 'random' },
       scrollTrigger: { trigger: '.material-cluster', start: 'top 82%', once: true } });
-    gsap.from(['.recycle .section-head > *', '.recycle > .container > .btn'], { opacity: 0, y: 30, duration: 1.1, ease: 'expo.out', stagger: .1,
+    gsap.from(['.recycle > .container > .btn'], { opacity: 0, y: 30, duration: 1.1, ease: 'expo.out', stagger: .1,
       scrollTrigger: { trigger: '.recycle', start: 'top 75%', once: true } });
     gsap.from('.partners .ptitle', { opacity: 0, y: 20, duration: 1, ease: 'expo.out', scrollTrigger: { trigger: '.partners', start: 'top 85%', once: true } });
 

@@ -52,9 +52,6 @@
         scrollTrigger: { trigger: sec, start: 'top 75%', end: 'center center', scrub: true } });
     });
 
-    // steps: outline numbers fill in as they arrive
-    $$('.steps4 .n').forEach(n => gsap.fromTo(n, { color: 'rgba(0,0,0,0)' }, { color: 'currentColor', ease: 'none',
-      scrollTrigger: { trigger: n, start: 'top 85%', end: 'top 45%', scrub: true } }));
 
     // bars & meters grow
     $$('.bars .col, .chart i').forEach(el => gsap.from(el, { scaleY: 0, duration: 1.4, ease: 'expo.out',

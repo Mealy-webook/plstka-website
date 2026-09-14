@@ -250,24 +250,9 @@
   function init() {
     if (inited) return; inited = true;
     buildMarquees();
-    const first = (() => { try { const s = !sessionStorage.getItem('pb-seen'); sessionStorage.setItem('pb-seen', '1'); return s; } catch (e) { return true; } })();
-    document.body.insertAdjacentHTML('afterbegin',
-      '<div class="loader" aria-hidden="true"><span class="loader-tag">Plstka &mdash; recycle, earn, repeat</span><span class="loader-count">0</span>' +
-      '<div class="loader-word">' + 'plstka'.split('').map(c => '<span>' + c + '</span>').join('') + '</div><div class="loader-panel"></div></div>');
-    const loader = $('.loader'), c = { v: 0 };
-    PB.lenis && PB.lenis.stop();
-    ready.forEach(fn => fn('pre'));            // pages set initial hero states
-    const tl = gsap.timeline({ defaults: { ease: 'expo.out' } });
-    if (first) {
-      tl.from('.loader-word span', { yPercent: 105, duration: 1.1, stagger: .06 })
-        .to(c, { v: 100, duration: 1.5, ease: 'power2.inOut', onUpdate: () => { $('.loader-count').textContent = Math.round(c.v) + '%'; } }, 0)
-        .to('.loader-word span', { yPercent: -105, duration: .8, stagger: .04, ease: 'expo.in' }, 1.4)
-        .to('.loader-panel', { yPercent: -100, duration: 1, ease: 'expo.inOut' }, '-=.5');
-    }
-    tl.to(loader, { clipPath: 'inset(0% 0% 100% 0%)', duration: 1.1, ease: 'expo.inOut',
-        onComplete: () => { loader.remove(); PB.lenis && PB.lenis.start(); } }, first ? '-=.55' : 0)
-      .add(() => { reveals(); ready.forEach(fn => fn('intro')); ScrollTrigger.sort(); ScrollTrigger.refresh(); }, '-=.6');
-    gsap.set(loader, { clipPath: 'inset(0% 0% 0% 0%)' });
+    // no preloader: set hero start states, then play the intro immediately
+    ready.forEach(fn => fn('pre'));
+    requestAnimationFrame(() => { reveals(); ready.forEach(fn => fn('intro')); ScrollTrigger.sort(); ScrollTrigger.refresh(); });
     addEventListener('load', () => ScrollTrigger.refresh());
   }
 })();

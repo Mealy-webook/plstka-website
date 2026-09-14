@@ -57,8 +57,9 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .xl { font-size: var(--fs-xl); }
 .l { font-size: var(--fs-l); letter-spacing: -.045em; line-height: .95; }
 .m { font-size: var(--fs-m); font-weight: 600; letter-spacing: -.025em; line-height: 1.18; }
-.outline { color: transparent; -webkit-text-stroke: 1.5px currentColor; }
-.green .outline { color: var(--yellow); -webkit-text-stroke: 0; }   /* thin outlines disappear on the green gradient */
+/* accent words are solid (outlined type was hard to read) */
+.outline { color: var(--green); -webkit-text-stroke: 0; }
+.dark .outline, .green .outline, .hero .outline, .foot .outline { color: var(--yellow); }
 .hl { color: var(--green); }
 .dark .hl, .green .hl { color: var(--yellow); }
 .eyebrow { display: inline-flex; align-items: center; gap: 12px; font-size: 13px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; }
